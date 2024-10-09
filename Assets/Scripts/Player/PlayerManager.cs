@@ -88,6 +88,25 @@ public class PlayerManager : MonoBehaviour
         currentState.EnterState(this);
     }
 
+    public void TakeDamage(int damage, Vector2 knockbackDirection)
+    {
+        if(currentState.hitPoints - damage <= 0)
+        {
+            playerDeath.hitPoints = 0;
+            SwitchState(playerDeath);
+        }
+        else
+        {
+            playerTakeDamage.isGrounded = currentState.isGrounded;
+            playerTakeDamage.isInvunerable = true;
+            playerTakeDamage.invunerableTime = currentState.invunerableTime;
+            playerTakeDamage.hitPoints = currentState.hitPoints - damage;
+            
+            playerTakeDamage.knockbackDirection = knockbackDirection;
+            SwitchState(playerTakeDamage);
+        }
+    }
+
     void ApplyGlobalDefinitions()
     {
     playerIdle.maxInvunerableTime = playerData.maxInvunerableTimeValue;

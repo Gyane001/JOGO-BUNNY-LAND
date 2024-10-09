@@ -32,7 +32,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void FixedUpdateState(PlayerManager playerManager)
     {
-
+        MovePlayer(playerManager);
     }
 
     public override string CurrentState(PlayerManager playerManager)
@@ -53,6 +53,27 @@ public class PlayerIdleState : PlayerBaseState
     public override void OnCollisionExit2D(PlayerManager playerManager, Collision2D collider)
     {
 
+    }
+
+    void MovePlayer(PlayerManager playerManager)
+    {
+        float xImpulse=0;
+        if(playerManager.inputManager.moveInput.x > 0)
+        {
+            playerManager.playerRB.transform.eulerAngles = new Vector2(0, 0);
+            xImpulse = playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if (playerManager.inputManager.moveInput.x < 0)
+        {
+            playerManager.playerRB.transform.eulerAngles = new Vector2(0, 180);
+            xImpulse = -playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if(playerManager.inputManager.moveInput.x == 0)
+        {
+            xImpulse = 0 - playerManager.playerRB.velocity.x;
+        }
+
+        playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
     }
 }
 
@@ -114,21 +135,23 @@ public class PlayerWalkState : PlayerBaseState
 
     void MovePlayer(PlayerManager playerManager)
     {
+        float xImpulse=0;
         if(playerManager.inputManager.moveInput.x > 0)
         {
             playerManager.playerRB.transform.eulerAngles = new Vector2(0, 0);
+            xImpulse = playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
         }
         else if (playerManager.inputManager.moveInput.x < 0)
         {
             playerManager.playerRB.transform.eulerAngles = new Vector2(0, 180);
+            xImpulse = -playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if(playerManager.inputManager.moveInput.x == 0)
+        {
+            xImpulse = 0 - playerManager.playerRB.velocity.x;
         }
 
-        //var nextPosition = playerManager.playerRB.position + new Vector2(playerManager.playerData.playerSpeed*Time.fixedDeltaTime*playerManager.inputManager.moveInput.x, 0);        
-        //playerManager.playerRB.MovePosition(nextPosition);
-
-        //playerManager.playerRB.AddForce(new Vector2(playerManager.inputManager.moveInput.x * playerManager.playerData.playerSpeed,0), ForceMode2D.Force);
-
-        playerManager.playerRB.velocity = new Vector2(playerManager.playerData.playerSpeed * playerManager.inputManager.moveInput.x, playerManager.playerRB.velocity.y);
+        playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
     }
 }
 
@@ -153,16 +176,15 @@ public class PlayerJumpState : PlayerBaseState
             playerManager.playerRB.AddForce(new Vector2(0, playerManager.playerData.jumpForce), ForceMode2D.Impulse);
             impulseWasGiven = true;
             isGrounded = false;
+            UpImpulse(playerManager);
         }
         else if(pendingUpImpulse)
         {
             playerManager.playerRB.AddForce(new Vector2(0, 2*playerManager.playerData.jumpForce), ForceMode2D.Impulse);
             pendingUpImpulse = false;
+            UpImpulse(playerManager);
         }
-        if(playerManager.inputManager.moveInput.x != 0)
-        {
-            MovePlayer(playerManager);
-        }
+        MovePlayer(playerManager);
     }
 
     public override string CurrentState(PlayerManager playerManager)
@@ -204,7 +226,6 @@ public class PlayerJumpState : PlayerBaseState
     void MovePlayer(PlayerManager playerManager)
     {
         float xImpulse=0;
-        Debug.Log(playerManager.inputManager.moveInput == null);
         if(playerManager.inputManager.moveInput.x > 0)
         {
             playerManager.playerRB.transform.eulerAngles = new Vector2(0, 0);
@@ -221,13 +242,14 @@ public class PlayerJumpState : PlayerBaseState
         }
 
         playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
-        
+    }
 
-        //playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x
+    void UpImpulse(PlayerManager playerManager)
+    {
+        float yImpulse;
+        yImpulse = playerManager.playerData.jumpForce - playerManager.playerRB.velocity.y;
 
-        //var nextPosition = playerManager.playerRB.position + new Vector2(playerManager.playerData.playerSpeed*Time.fixedDeltaTime*playerManager.inputManager.moveInput.x, 0);        
-        //playerManager.playerRB.MovePosition(nextPosition);
-        //playerManager.playerRB.velocity = new Vector2(playerManager.playerData.playerSpeed * playerManager.inputManager.moveInput.x, playerManager.playerRB.velocity.y);
+        playerManager.playerRB.AddForce(new Vector2(0, yImpulse), ForceMode2D.Impulse);
     }
 }
 
@@ -239,16 +261,16 @@ public class PlayerAttackState : PlayerBaseState
         playerManager.playerAnimator.PlayInFixedTime("Attack");
         time = 0;
         playerManager.attack.SetActive(true);
-        playerManager.attack.GetComponent<BoxCollider2D>().offset = new Vector2(4.5f, 0.5f);
-        playerManager.attack.GetComponent<BoxCollider2D>().size = new Vector2(2f, 3f);
+        playerManager.attack.GetComponent<BoxCollider2D>().offset = new Vector2(4.5f, 1.25f);
+        playerManager.attack.GetComponent<BoxCollider2D>().size = new Vector2(2f, 5f);
     }
 
     public override void UpdateState(PlayerManager playerManager)
     {
         if(time >=playerManager.attackAnimationSwitchSpriteTime)
         {
-            playerManager.attack.GetComponent<BoxCollider2D>().offset = new Vector2(4.5f, -2.75f);
-            playerManager.attack.GetComponent<BoxCollider2D>().size = new Vector2(4f, 1.75f);
+            playerManager.attack.GetComponent<BoxCollider2D>().offset = new Vector2(5f, -2.75f);
+            playerManager.attack.GetComponent<BoxCollider2D>().size = new Vector2(5.5f, 1.75f);
         }
         if(time >=playerManager.attackAnimationTotalTime)
         {
@@ -302,21 +324,23 @@ public class PlayerAttackState : PlayerBaseState
 
     void MovePlayer(PlayerManager playerManager)
     {
+        float xImpulse=0;
         if(playerManager.inputManager.moveInput.x > 0)
         {
             playerManager.playerRB.transform.eulerAngles = new Vector2(0, 0);
+            xImpulse = playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
         }
         else if (playerManager.inputManager.moveInput.x < 0)
         {
             playerManager.playerRB.transform.eulerAngles = new Vector2(0, 180);
+            xImpulse = -playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if(playerManager.inputManager.moveInput.x == 0)
+        {
+            xImpulse = 0 - playerManager.playerRB.velocity.x;
         }
 
-        //var nextPosition = playerManager.playerRB.position + new Vector2(playerManager.playerData.playerSpeed*Time.fixedDeltaTime*playerManager.inputManager.moveInput.x, 0);        
-        //playerManager.playerRB.MovePosition(nextPosition);
-
-        //playerManager.playerRB.AddForce(new Vector2(playerManager.inputManager.moveInput.x * playerManager.playerData.playerSpeed,0), ForceMode2D.Force);
-
-        playerManager.playerRB.velocity = new Vector2(playerManager.playerData.playerSpeed * playerManager.inputManager.moveInput.x, playerManager.playerRB.velocity.y);
+        playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
     }
 }
 
@@ -360,19 +384,38 @@ public class PlayerSpecialAttackState : PlayerBaseState
 
 public class PlayerTakeDamageState : PlayerBaseState
 {
+    public Vector2 knockbackDirection;
+    bool impulseWasGiven;
+    float timer;
     public override void EnterState(PlayerManager playerManager)
     {
         playerManager.playerAnimator.Play("TakeDamage");
+        timer = 0;
+        impulseWasGiven = false;
     }
 
     public override void UpdateState(PlayerManager playerManager)
     {
+        if(timer > playerManager.playerAnimator.GetCurrentAnimatorStateInfo(0).length)
+        {
+            playerManager.SwitchState(playerManager.playerIdle);
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
 
     }
 
     public override void FixedUpdateState(PlayerManager playerManager)
     {
-
+        if(!impulseWasGiven)
+        {
+            knockbackDirection.Normalize();
+            knockbackDirection.x = playerManager.playerData.knockbackFromAttacks * knockbackDirection.x - playerManager.playerRB.velocity.x;
+            playerManager.playerRB.AddForce(knockbackDirection, ForceMode2D.Impulse);
+            impulseWasGiven = true;
+        }
     }
 
     public override string CurrentState(PlayerManager playerManager)

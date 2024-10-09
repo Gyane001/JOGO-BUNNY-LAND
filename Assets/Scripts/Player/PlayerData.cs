@@ -18,6 +18,7 @@ public class PlayerData : ScriptableObject
         [Header("Variables")]
         public float playerSpeed;
         public float jumpForce;
+        public float knockbackFromAttacks;
         public int attackDamage;
         public float attackKnockback;
         [Space(10)]

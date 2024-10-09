@@ -15,11 +15,12 @@ public class CrowData : ScriptableObject
     #region Variables
         [Header("Variables")]
         public float crowSpeed;
+        public int crowDamage;
         public float timeToStartWalk;
         public float questionMarkShowTime;
         public float exclamationShowTime;
-        public bool isImmuneToKnockBack;
-        public float resistanceToKnockBack;
+        public float knockbackTimeDuration;
+        public float knockbackMultiplier;
         [Space(10)]
     #endregion
 

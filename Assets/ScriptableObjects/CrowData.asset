@@ -15,10 +15,11 @@ MonoBehaviour:
   isInvunerableInitialValue: 0
   invunerableTimeInitialValue: 0
   crowSpeed: 2
+  crowDamage: 2
   timeToStartWalk: 0.5
   questionMarkShowTime: 1
   exclamationShowTime: 1
-  isImmuneToKnockBack: 0
-  resistanceToKnockBack: 0
+  knockbackTimeDuration: 0.1
+  knockbackMultiplier: 1
   crowMaxHP: 2
   crowMaxInvunerableTime: 0.25

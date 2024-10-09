@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CrowIdleState : CrowBaseState
@@ -54,11 +55,18 @@ public class CrowIdleState : CrowBaseState
     {
         if(collider.gameObject.tag == "Player")
         {
-            Debug.Log("Player tocou no corvo");
+            if(collider.transform.position.y > crowEnemyManager.crowHitBoxPosition.position.y)
+            {
+                collider.transform.GetComponent<PlayerManager>().currentState.pendingUpImpulse = true;
+            }
+            else
+            {
+                collider.transform.GetComponent<PlayerManager>().TakeDamage(crowEnemyManager.crowData.crowDamage, new Vector2(collider.transform.position.x - crowEnemyManager.crowHitBoxPosition.position.x, 0));
+            }
         }
         if(collider.gameObject.tag == "PlayerAttack")
         {
-            Debug.Log("Player atacou no corvo");
+            crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback,0), ForceMode2D.Impulse);
         }
     }
 }
@@ -79,6 +87,8 @@ public class CrowWalkState : CrowBaseState
 
         isWalking = false;
         notWalkingTime = 0;
+        
+        knockbackTimer = 0;
     }
 
     public override void UpdateState(CrowEnemyManager crowEnemyManager)
@@ -111,25 +121,41 @@ public class CrowWalkState : CrowBaseState
 
     public override void FixedUpdateState(CrowEnemyManager crowEnemyManager)
     {
-        if(isWalking)
+        if(knockbackTimer >= crowEnemyManager.crowData.knockbackTimeDuration)
         {
-            var direction = new Vector2(player.transform.position.x - crowEnemyManager.crowRB.position.x,0);
-            if(direction.magnitude<0.05)
+            if(isWalking)
             {
-                //crowEnemyManager.crowRB.velocity = new Vector2(0, crowEnemyManager.crowRB.velocity.y);
-            }
-            else
-            {
-                if(direction.x>0)
+                var direction = new Vector2(player.transform.position.x - crowEnemyManager.crowRB.position.x,0);
+                if(direction.magnitude<0.05)
                 {
-                    crowEnemyManager.crowRB.transform.eulerAngles = new Vector3(0, 180);
+                    crowEnemyManager.crowRB.AddForce(new Vector2(0 - crowEnemyManager.crowRB.velocity.x, 0), ForceMode2D.Impulse);
                 }
                 else
                 {
-                    crowEnemyManager.crowRB.transform.eulerAngles = new Vector3(0, 0);
+                    direction.Normalize();
+                    if(direction.x>0)
+                    {
+                        crowEnemyManager.crowRB.transform.eulerAngles = new Vector3(0, 180);
+                    }
+                    else
+                    {
+                        crowEnemyManager.crowRB.transform.eulerAngles = new Vector3(0, 0);
+                    }
+                    crowEnemyManager.crowRB.AddForce(new Vector2(crowEnemyManager.crowData.crowSpeed*direction.x - crowEnemyManager.crowRB.velocity.x, 0), ForceMode2D.Impulse);
                 }
-                //crowEnemyManager.crowRB.velocity = new Vector2(crowEnemyManager.crowData.crowSpeed*direction.normalized.x, crowEnemyManager.crowRB.velocity.y);    
             }
+        }
+        else
+        {
+            knockbackTimer +=Time.fixedDeltaTime;
+        }
+        if(pendingKnockback)
+        {
+            knockbackDirection.Normalize();
+            knockbackDirection.x = knockbackValue * knockbackDirection.x - crowEnemyManager.crowRB.velocity.x;
+            crowEnemyManager.crowRB.AddForce(knockbackDirection, ForceMode2D.Impulse);
+            knockbackTimer = 0;
+            pendingKnockback = false;
         }
     }
 
@@ -160,15 +186,20 @@ public class CrowWalkState : CrowBaseState
             if(collider.transform.position.y > crowEnemyManager.crowHitBoxPosition.position.y)
             {
                 collider.transform.GetComponent<PlayerManager>().currentState.pendingUpImpulse = true;
+                crowEnemyManager.crowCurrentState.pendingKnockback = true;
+                crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.GetComponent<PlayerManager>().playerData.attackKnockback;
+                crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x- collider.transform.position.x,0);
             }
             else
             {
-                Debug.Log("Player tocou de lado ou por baixo");
+                collider.transform.GetComponent<PlayerManager>().TakeDamage(crowEnemyManager.crowData.crowDamage, new Vector2(collider.transform.position.x - crowEnemyManager.crowHitBoxPosition.position.x, 0));
             }
         }
         if(collider.gameObject.tag == "PlayerAttack")
         {
-            crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback,0), ForceMode2D.Impulse);
+            crowEnemyManager.crowCurrentState.pendingKnockback = true;
+            crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback;
+            crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x- collider.transform.position.x,0);
         }
     }
 }
