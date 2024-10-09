@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1c44f82ef489d454eb7087f91deae451
+guid: eace6e6d69ce15044a91ca1f592dc165
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,13 +44,13 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 0
+  spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 164, y: 906, z: 168, w: 908}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -110,22 +110,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chao_0
+      name: CorvoInimigo_0
       rect:
         serializedVersion: 2
-        x: 161
-        y: 903
-        width: 3276
-        height: 592
+        x: 100
+        y: 50
+        width: 600
+        height: 600
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 066b32d1826393f4695acaa8022deee9
-      internalID: -1421501562
+      spriteID: 260e91d2263909a43acb93b895204eaa
+      internalID: -644476282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CorvoInimigo_1
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 50
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03c49c10c795e7546a15998c587c1efa
+      internalID: -601597321
       vertices: []
       indices: 
       edges: []
@@ -134,14 +155,15 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      chao_0: -1421501562
+      CorvoInimigo_0: -644476282
+      CorvoInimigo_1: -601597321
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

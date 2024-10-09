@@ -1,39 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
 public class PlayerManager : MonoBehaviour
 {
-    public PlayerBaseState currentState;
+    #region Player States Changer Variables
 
-    public Animator playerAnimator;
+        public PlayerBaseState currentState;
+        public Animator playerAnimator;
+        public Rigidbody2D playerRB;
+        public InputManager inputManager;
+        public GameObject attack;
 
-    public bool isGroundedInitialValue;
-    public bool isInvunerableInitialValue;
-    public float invunerableTimeInitialValue;
-    public float maxInvunerableTimeValue;
-    public int hitPointsInitialValue;
-    public int maxHitPointsValue;
+        public float attackAnimationTotalTime;
+        public float attackAnimationSwitchSpriteTime;
 
-    public PlayerIdleState playerIdle = new PlayerIdleState();
-    public PlayerWalkState playerWalk = new PlayerWalkState();
-    public PlayerJumpState playerJump = new PlayerJumpState();
-    public PlayerAttackState playerAttack = new PlayerAttackState();
-    public PlayerSpecialAttackState playerSpecialAttack = new PlayerSpecialAttackState();
-    public PlayerTakeDamageState playerTakeDamage = new PlayerTakeDamageState();
-    public PlayerDeathState playerDeath = new PlayerDeathState();
+    #endregion
+    #region Player Data
+
+        public PlayerData playerData;
+
+    #endregion
+    #region Player States Instantiation
+
+        public PlayerIdleState playerIdle = new PlayerIdleState();
+        public PlayerWalkState playerWalk = new PlayerWalkState();
+        public PlayerJumpState playerJump = new PlayerJumpState();
+        public PlayerAttackState playerAttack = new PlayerAttackState();
+        public PlayerSpecialAttackState playerSpecialAttack = new PlayerSpecialAttackState();
+        public PlayerTakeDamageState playerTakeDamage = new PlayerTakeDamageState();
+        public PlayerDeathState playerDeath = new PlayerDeathState();
+
+    #endregion
 
     void Awake() 
     {
         ApplyGlobalDefinitions();
 
         currentState = playerIdle;
-        currentState.isGrounded = isGroundedInitialValue;
-        currentState.isInvunerable = isInvunerableInitialValue;
-        currentState.invunerableTime = invunerableTimeInitialValue;
-        currentState.hitPoints = hitPointsInitialValue;
+        currentState.isGrounded = playerData.isGroundedInitialValue;
+        currentState.isInvunerable = playerData.isInvunerableInitialValue;
+        currentState.invunerableTime = playerData.invunerableTimeInitialValue;
+        currentState.hitPoints = playerData.hitPointsInitialValue;
         currentState.EnterState(this);
     }
 
@@ -79,25 +90,25 @@ public class PlayerManager : MonoBehaviour
 
     void ApplyGlobalDefinitions()
     {
-    playerIdle.maxInvunerableTime = maxInvunerableTimeValue;
-    playerIdle.maxHitPoints = maxHitPointsValue;
+    playerIdle.maxInvunerableTime = playerData.maxInvunerableTimeValue;
+    playerIdle.maxHitPoints = playerData.maxHitPointsValue;
 
-    playerWalk.maxInvunerableTime = maxInvunerableTimeValue;
-    playerWalk.maxHitPoints = maxHitPointsValue;
+    playerWalk.maxInvunerableTime = playerData.maxInvunerableTimeValue;
+    playerWalk.maxHitPoints = playerData.maxHitPointsValue;
 
-    playerJump.maxInvunerableTime = maxInvunerableTimeValue;
-    playerJump.maxHitPoints = maxHitPointsValue;
+    playerJump.maxInvunerableTime = playerData.maxInvunerableTimeValue;
+    playerJump.maxHitPoints = playerData.maxHitPointsValue;
 
-    playerAttack.maxInvunerableTime = maxInvunerableTimeValue;
-    playerAttack.maxHitPoints = maxHitPointsValue;
+    playerAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
+    playerAttack.maxHitPoints = playerData.maxHitPointsValue;
 
-    playerSpecialAttack.maxInvunerableTime = maxInvunerableTimeValue;
-    playerSpecialAttack.maxHitPoints = maxHitPointsValue;
+    playerSpecialAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
+    playerSpecialAttack.maxHitPoints = playerData.maxHitPointsValue;
 
-    playerTakeDamage.maxInvunerableTime = maxInvunerableTimeValue;
-    playerTakeDamage.maxHitPoints = maxHitPointsValue;
+    playerTakeDamage.maxInvunerableTime = playerData.maxInvunerableTimeValue;
+    playerTakeDamage.maxHitPoints = playerData.maxHitPointsValue;
 
-    playerDeath.maxInvunerableTime = maxInvunerableTimeValue;
-    playerDeath.maxHitPoints = maxHitPointsValue;
+    playerDeath.maxInvunerableTime = playerData.maxInvunerableTimeValue;
+    playerDeath.maxHitPoints = playerData.maxHitPointsValue;
     }
 }

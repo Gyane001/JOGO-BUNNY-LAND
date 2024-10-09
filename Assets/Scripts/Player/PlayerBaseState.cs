@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class PlayerBaseState
 {
+    public bool pendingUpImpulse;
     public bool isGrounded;
     public bool isInvunerable;
     public float invunerableTime;

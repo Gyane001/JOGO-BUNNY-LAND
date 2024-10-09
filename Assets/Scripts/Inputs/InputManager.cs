@@ -37,7 +37,15 @@ public class InputManager : MonoBehaviour
     }
 
     private void UpdateInputs()
-    {   moveInput = _moveInputs.ReadValue<Vector2>();
+    {   
+        if(_moveInputs != null)
+        {
+            moveInput = _moveInputs.ReadValue<Vector2>();
+        }
+        else
+        {
+            moveInput = Vector2.zero;
+        }
         attackInput = _attackInputs.WasPressedThisFrame();
         jumpInput = _jumpInputs.WasPressedThisFrame();
         specialAttackInput = _specialAttackInputs.WasPressedThisFrame();

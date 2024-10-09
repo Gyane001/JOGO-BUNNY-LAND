@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "PROJETO FACUL BUNNY WORLD.sln"
+    "dotnet.defaultSolution": "JOGO-BUNNY-LAND.sln"
 }
