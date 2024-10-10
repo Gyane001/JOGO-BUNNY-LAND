@@ -42,7 +42,10 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
     {
-
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
     }
 
     public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)
@@ -120,7 +123,10 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
     {
-
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
     }
 
     public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)
@@ -194,6 +200,11 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
     {   
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
+        
         foreach (ContactPoint2D contactPoint in collider.contacts)
         {
             if(collider.gameObject.tag == "ground" && contactPoint.normal.y > 0.5f)
@@ -309,7 +320,10 @@ public class PlayerAttackState : PlayerBaseState
 
     public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
     {
-
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
     }
 
     public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)
@@ -368,7 +382,10 @@ public class PlayerSpecialAttackState : PlayerBaseState
 
     public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
     {
-
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
     }
 
     public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)
@@ -425,7 +442,10 @@ public class PlayerTakeDamageState : PlayerBaseState
 
     public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
     {
-
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
     }
 
     public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)
@@ -463,7 +483,10 @@ public class PlayerDeathState : PlayerBaseState
 
     public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
     {
-
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
     }
 
     public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)

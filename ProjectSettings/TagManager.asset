@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ground
   - PlayerAttack
+  - DeathBarrier
   layers:
   - Default
   - TransparentFX
