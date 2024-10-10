@@ -278,6 +278,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154074227}
   m_CullTransparentMesh: 1
+--- !u!1 &205795915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 205795916}
+  m_Layer: 8
+  m_Name: PointUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &205795916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205795915}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 13.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1885413860}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &216651017
 GameObject:
   m_ObjectHideFlags: 3
@@ -1324,6 +1355,8 @@ GameObject:
   m_Component:
   - component: {fileID: 842495744}
   - component: {fileID: 842495745}
+  - component: {fileID: 842495747}
+  - component: {fileID: 842495746}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -1362,6 +1395,39 @@ MonoBehaviour:
   menus:
   - {fileID: 1835192487}
   - {fileID: 1686245234}
+--- !u!114 &842495746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842495743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844f9acb6de49e5469391ff666ad4489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLifeBar: {fileID: 0}
+--- !u!114 &842495747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842495743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1718f2f8b4232b645aeb709f30931a86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carrot1: {fileID: 1486283798}
+  carrot2: {fileID: 1792730875}
+  carrots0: {fileID: -2105655216, guid: 98f05deafed0c8f45b92b31690defa2e, type: 3}
+  carrots1: {fileID: 2076346449, guid: 98f05deafed0c8f45b92b31690defa2e, type: 3}
+  carrots2: {fileID: 525550736, guid: 98f05deafed0c8f45b92b31690defa2e, type: 3}
+  carrots3: {fileID: -1440545329, guid: 98f05deafed0c8f45b92b31690defa2e, type: 3}
+  carrots4: {fileID: -2050166065, guid: 98f05deafed0c8f45b92b31690defa2e, type: 3}
+  carrots5: {fileID: -1564123077, guid: 98f05deafed0c8f45b92b31690defa2e, type: 3}
 --- !u!1001 &875430419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2609,6 +2675,7 @@ Transform:
   m_Children:
   - {fileID: 1966529568}
   - {fileID: 1995759515}
+  - {fileID: 1885413860}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1695921698
@@ -2720,9 +2787,44 @@ MonoBehaviour:
   playerRB: {fileID: 1695921701}
   inputManager: {fileID: 1966529570}
   attack: {fileID: 1995759514}
+  virtualCamera: {fileID: 698470625}
+  carrotManager: {fileID: 0}
+  playerLifeManager: {fileID: 0}
+  deathAnimationPoints: {fileID: 0}
   attackAnimationTotalTime: 0.5
   attackAnimationSwitchSpriteTime: 0.25
   playerData: {fileID: 11400000, guid: 87a8c58279eaf7b4b8cf66b407b94caa, type: 2}
+--- !u!1 &1700427955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1700427956}
+  m_Layer: 8
+  m_Name: PointDown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1700427956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700427955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -50, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1885413860}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1764950307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3083,6 +3185,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -1920, y: -1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1885413859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1885413860}
+  m_Layer: 8
+  m_Name: PlayerDeathPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1885413860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885413859}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 205795916}
+  - {fileID: 1700427956}
+  m_Father: {fileID: 1695921696}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1966529567
 GameObject:
   m_ObjectHideFlags: 0

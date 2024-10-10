@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
@@ -461,14 +462,28 @@ public class PlayerTakeDamageState : PlayerBaseState
 
 public class PlayerDeathState : PlayerBaseState
 {
+    float deathAnimationTotalTime;
+    float timer;
     public override void EnterState(PlayerManager playerManager)
     {
         playerManager.playerAnimator.Play("Death");
+        deathAnimationTotalTime = playerManager.playerAnimator.GetCurrentAnimatorClipInfo(0).Length;
+        timer = 0;
+        playerManager.playerRB.bodyType = RigidbodyType2D.Static;
+        playerManager.playerLifeManager.UpdateLife(0,playerManager.playerData.maxHitPointsValue);
+        playerManager.virtualCamera.Follow = playerManager.playerRB.transform;
     }
 
     public override void UpdateState(PlayerManager playerManager)
     {
-
+        if(timer <= deathAnimationTotalTime)
+        {
+            for(int i=0; i<playerManager.deathAnimationPoints.childCount; i++)
+            {
+                
+            }
+            timer += Time.deltaTime;
+        }
     }
 
     public override void FixedUpdateState(PlayerManager playerManager)

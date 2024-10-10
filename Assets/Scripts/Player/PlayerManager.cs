@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,7 +15,10 @@ public class PlayerManager : MonoBehaviour
         public Rigidbody2D playerRB;
         public InputManager inputManager;
         public GameObject attack;
-
+        public CinemachineVirtualCamera virtualCamera;
+        public CarrotManager carrotManager;
+        public PlayerLifeManager playerLifeManager;
+        public Transform deathAnimationPoints;
         public float attackAnimationTotalTime;
         public float attackAnimationSwitchSpriteTime;
 
