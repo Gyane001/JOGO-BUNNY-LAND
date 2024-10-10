@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 837feeb64163c1a48aa1bdced4d96fc5
+guid: 0f0f6d1a0a23cf7478577add7f91e329
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,30 +93,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CorvoGrande_0
+      name: ATACANDO COM TODAS AS PATINHAS POSSIVEIS_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 20
-        width: 600
-        height: 400
+        x: 320
+        y: 700
+        width: 260
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98ad0926625134c45a7cd0f092cf4a49
-      internalID: -378890301
+      spriteID: d00825efade93c74695700ddad6cb4da
+      internalID: -1408048873
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CorvoGrande_1
+      name: ATACANDO COM TODAS AS PATINHAS POSSIVEIS_2
       rect:
         serializedVersion: 2
-        x: 680
-        y: 20
-        width: 500
-        height: 540
+        x: 660
+        y: 700
+        width: 320
+        height: 322
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,8 +132,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b547fd40042150143a0dfbcd20e66ccd
-      internalID: -384837582
+      spriteID: 40935f6d2bec6bc42bdb2af54e2cab67
+      internalID: 1133194152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ATACANDO COM TODAS AS PATINHAS POSSIVEIS_3
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 260
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d79a0c780be58fd4c99c79cc901b38c8
+      internalID: -1837242052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ATACANDO COM TODAS AS PATINHAS POSSIVEIS_5
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 321
+        width: 320
+        height: 318
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bd45580d3767ad4c9789d12395fbafc
+      internalID: -626828619
       vertices: []
       indices: 
       edges: []
@@ -162,8 +191,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CorvoGrande_0: -378890301
-      CorvoGrande_1: -384837582
+      ATACANDO COM TODAS AS PATINHAS POSSIVEIS_0: -1408048873
+      ATACANDO COM TODAS AS PATINHAS POSSIVEIS_1: 419793592
+      ATACANDO COM TODAS AS PATINHAS POSSIVEIS_2: 1133194152
+      ATACANDO COM TODAS AS PATINHAS POSSIVEIS_3: -1837242052
+      ATACANDO COM TODAS AS PATINHAS POSSIVEIS_4: 1102801574
+      ATACANDO COM TODAS AS PATINHAS POSSIVEIS_5: -626828619
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
