@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 27
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -101,11 +114,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 120
-        y: 899
-        width: 301
-        height: 340
+        y: 900
+        width: 300
+        height: 341
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -121,13 +134,13 @@ TextureImporter:
       name: SPRITE COELHA MORRE + ESPECIAL _3
       rect:
         serializedVersion: 2
-        x: 540
+        x: 488
         y: 919
-        width: 220
-        height: 320
+        width: 300
+        height: 341
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 50, y: 0, z: 47, w: 18}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -147,7 +160,7 @@ TextureImporter:
         width: 520
         height: 160
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -165,10 +178,10 @@ TextureImporter:
         serializedVersion: 2
         x: 120
         y: 520
-        width: 301
-        height: 340
+        width: 300
+        height: 341
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,13 +197,13 @@ TextureImporter:
       name: SPRITE COELHA MORRE + ESPECIAL _10
       rect:
         serializedVersion: 2
-        x: 540
-        y: 540
-        width: 220
-        height: 320
+        x: 509
+        y: 541
+        width: 300
+        height: 341
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 0, z: 48, w: 21}
       outline: []
       physicsShape: []
       tessellationDetail: 0

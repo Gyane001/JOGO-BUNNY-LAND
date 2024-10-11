@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -17,6 +18,11 @@ public class PlayerIdleState : PlayerBaseState
         if(playerManager.inputManager.jumpInput)
         {
             playerManager.SwitchState(playerManager.playerJump);
+            return;
+        }
+        if(playerManager.inputManager.specialAttackInput)
+        {
+            playerManager.SwitchState(playerManager.playerSpecialAttack);
             return;
         }
         if(playerManager.inputManager.attackInput)
@@ -466,12 +472,13 @@ public class PlayerDeathState : PlayerBaseState
     float timer;
     public override void EnterState(PlayerManager playerManager)
     {
-        playerManager.playerAnimator.Play("Death");
+        playerManager.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        playerManager.deathSpriteRenderer.gameObject.SetActive(true);
         deathAnimationTotalTime = playerManager.playerAnimator.GetCurrentAnimatorClipInfo(0).Length;
         timer = 0;
         playerManager.playerRB.bodyType = RigidbodyType2D.Static;
         playerManager.playerLifeManager.UpdateLife(0,playerManager.playerData.maxHitPointsValue);
-        playerManager.virtualCamera.Follow = playerManager.playerRB.transform;
+        
     }
 
     public override void UpdateState(PlayerManager playerManager)
@@ -480,9 +487,17 @@ public class PlayerDeathState : PlayerBaseState
         {
             for(int i=0; i<playerManager.deathAnimationPoints.childCount; i++)
             {
-                
+                if(timer>= i*deathAnimationTotalTime/playerManager.deathAnimationPoints.childCount && timer<= (i+1)*deathAnimationTotalTime/playerManager.deathAnimationPoints.childCount)
+                {
+                    playerManager.deathSpriteRenderer.transform.position =  playerManager.deathSpriteRenderer.transform.position + (playerManager.deathAnimationPoints.GetChild(i).position - playerManager.deathSpriteRenderer.transform.position)/0.2f * Time.deltaTime;
+                }
             }
             timer += Time.deltaTime;
+        }
+        else
+        {
+            playerManager.inGameMenu.SetActive(false);
+            playerManager.gameOverMenu.SetActive(true);
         }
     }
 

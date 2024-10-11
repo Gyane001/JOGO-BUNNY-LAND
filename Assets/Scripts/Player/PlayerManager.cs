@@ -15,10 +15,15 @@ public class PlayerManager : MonoBehaviour
         public Rigidbody2D playerRB;
         public InputManager inputManager;
         public GameObject attack;
+        public GameObject inGameMenu;
+        public GameObject gameOverMenu;
         public CinemachineVirtualCamera virtualCamera;
         public CarrotManager carrotManager;
         public PlayerLifeManager playerLifeManager;
         public Transform deathAnimationPoints;
+        public SpriteRenderer deathSpriteRenderer;
+        public Sprite deathSprite0;
+        public Sprite deathSprite1;
         public float attackAnimationTotalTime;
         public float attackAnimationSwitchSpriteTime;
 
