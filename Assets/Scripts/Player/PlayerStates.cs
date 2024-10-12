@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.Examples;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
@@ -278,21 +279,22 @@ public class PlayerAttackState : PlayerBaseState
     {
         playerManager.playerAnimator.PlayInFixedTime("Attack");
         time = 0;
-        playerManager.attack.SetActive(true);
-        playerManager.attack.GetComponent<BoxCollider2D>().offset = new Vector2(4.5f, 1.25f);
-        playerManager.attack.GetComponent<BoxCollider2D>().size = new Vector2(2f, 5f);
+        playerManager.playerAttackInHand.SetActive(true);
+        playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().offset = new Vector2(4.5f, 1.25f);
+        playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().size = new Vector2(2f, 5f);
     }
 
     public override void UpdateState(PlayerManager playerManager)
     {
         if(time >=playerManager.attackAnimationSwitchSpriteTime)
         {
-            playerManager.attack.GetComponent<BoxCollider2D>().offset = new Vector2(5f, -2.75f);
-            playerManager.attack.GetComponent<BoxCollider2D>().size = new Vector2(5.5f, 1.75f);
+            playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().offset = new Vector2(5f, -2.75f);
+            playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().size = new Vector2(5.5f, 1.75f);
         }
         if(time >=playerManager.attackAnimationTotalTime)
         {
-            playerManager.attack.SetActive(false);
+            playerManager.playerAttackInHand.SetActive(false);
+            playerManager.playerSpinningKnifeSpawner.spawnSpinningKnife(playerManager.playerAttackInHand.transform, playerManager.gameObject.transform.rotation.y);
             if(playerManager.inputManager.jumpInput)
             {
                 playerManager.SwitchState(playerManager.playerJump);

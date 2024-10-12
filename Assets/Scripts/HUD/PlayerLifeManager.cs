@@ -10,6 +10,6 @@ public class PlayerLifeManager : MonoBehaviour
 
     public void UpdateLife(int playercurrentHP, int playerMaxHP)
     {
-        playerLifeBar.size =  playercurrentHP / playerMaxHP;
+        playerLifeBar.size =  (float)playercurrentHP / playerMaxHP;
     }
 }

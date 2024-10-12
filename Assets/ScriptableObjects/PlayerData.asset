@@ -19,7 +19,9 @@ MonoBehaviour:
   playerSpeed: 4
   jumpForce: 35
   knockbackFromAttacks: 5
-  attackDamage: 3
+  attackDamage: 2
   attackKnockback: 20
+  spinningKnifeSpeed: 6
+  spinningKnifeDuration: 1
   maxInvunerableTimeValue: 1
   maxHitPointsValue: 20

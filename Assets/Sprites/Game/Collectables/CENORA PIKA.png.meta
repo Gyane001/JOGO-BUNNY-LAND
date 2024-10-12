@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ca76dae2df545da49aa905ce0a90c7de
+guid: 63ea26395ac99904b94ce39cfc55e602
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,17 +93,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "CORA\xC7\xC3O DE VIDA  (1)_0"
+      name: CENORA PIKA_0
       rect:
         serializedVersion: 2
-        x: 480
-        y: 540
-        width: 280
-        height: 280
+        x: 352
+        y: 384
+        width: 352
+        height: 400
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dd031e60fa96f647a8178f4a19943e6
-      internalID: -386954730
+      spriteID: 444bd6210df3b3549bdc563cfcb4154e
+      internalID: 1918810950
       vertices: []
       indices: 
       edges: []
@@ -128,7 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "CORA\xC7\xC3O DE VIDA  (1)_0": -386954730
+      CENORA PIKA_0: 1918810950
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

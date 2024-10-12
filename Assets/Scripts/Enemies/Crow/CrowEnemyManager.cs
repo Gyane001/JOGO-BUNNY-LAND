@@ -67,4 +67,14 @@ public class CrowEnemyManager : MonoBehaviour
         crowCurrentState.EnterState(this);
     }
 
+    public void TakeDamage(int damage)
+    {
+        crowCurrentHP -= damage;
+        if (crowCurrentHP < 0)
+        {
+            this.gameObject.GetComponent<Animator>().enabled = false;
+            this.gameObject.SetActive(false);
+        }
+    }
+
 }

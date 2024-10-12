@@ -21,6 +21,8 @@ public class PlayerData : ScriptableObject
         public float knockbackFromAttacks;
         public int attackDamage;
         public float attackKnockback;
+        public float spinningKnifeSpeed;
+        public float spinningKnifeDuration;
         [Space(10)]
     #endregion
 

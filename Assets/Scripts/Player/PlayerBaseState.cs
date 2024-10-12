@@ -9,8 +9,7 @@ public abstract class PlayerBaseState
     public bool isInvunerable;
     public float invunerableTime;
     public float maxInvunerableTime;
-    public int hitPoints;
-    public int maxHitPoints;
+
     public abstract void EnterState(PlayerManager playerManager);
 
     public abstract void UpdateState(PlayerManager playerManager);

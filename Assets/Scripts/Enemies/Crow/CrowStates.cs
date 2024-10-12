@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class CrowIdleState : CrowBaseState
@@ -10,6 +12,14 @@ public class CrowIdleState : CrowBaseState
     {
         showTime = 0;
         crowEnemyManager.questionMark.SetActive(true);
+        if (crowEnemyManager.crowRB.transform.rotation.eulerAngles.y == 0)
+        {
+            crowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 0);
+        }
+        else
+        {
+            crowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 180);
+        }
         crowEnemyManager.crowAnimator.Play("Idle");
     }
 
@@ -22,6 +32,7 @@ public class CrowIdleState : CrowBaseState
         else
         {
             crowEnemyManager.questionMark.SetActive(false);
+
         }
     }
 
@@ -67,6 +78,17 @@ public class CrowIdleState : CrowBaseState
         if(collider.gameObject.tag == "PlayerAttack")
         {
             crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback,0), ForceMode2D.Impulse);
+            crowEnemyManager.TakeDamage(collider.transform.parent.GetComponent<PlayerManager>().playerData.attackDamage);
+        }
+        if (collider.gameObject.tag == "SpinningKnife")
+        {
+            crowEnemyManager.crowCurrentState.pendingKnockback = true;
+            crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback;
+            crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x - collider.transform.position.x, 0);
+
+            crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
+            crowEnemyManager.TakeDamage(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackDamage);
+            collider.transform.GetComponent<SpinningKnifeManager>().DestroyEarlier();
         }
     }
 }
@@ -200,6 +222,16 @@ public class CrowWalkState : CrowBaseState
             crowEnemyManager.crowCurrentState.pendingKnockback = true;
             crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback;
             crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x- collider.transform.position.x,0);
+        }
+        if (collider.gameObject.tag == "SpinningKnife")
+        {
+            crowEnemyManager.crowCurrentState.pendingKnockback = true;
+            crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback;
+            crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x - collider.transform.position.x, 0);
+
+            crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
+            crowEnemyManager.TakeDamage(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackDamage);
+            collider.transform.GetComponent<SpinningKnifeManager>().DestroyEarlier();
         }
     }
 }

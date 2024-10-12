@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 98f05deafed0c8f45b92b31690defa2e
+guid: dd7c6ded59d960f469d170776b89ccb7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SPRITES CENOURA FODA_0
+      name: FACAGirante_0
       rect:
         serializedVersion: 2
-        x: 443
-        y: 537
-        width: 1050
-        height: 910
+        x: 523
+        y: 547
+        width: 59
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8c4a6bcd57a8d7429767c5630861a22
-      internalID: -2105655216
+      spriteID: 05ac5f2954101c141942ff653cc28960
+      internalID: 1303568771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPRITES CENOURA FODA_1
+      name: FACAGirante_1
       rect:
         serializedVersion: 2
-        x: 2041
-        y: 537
-        width: 1055
-        height: 910
+        x: 699
+        y: 532
+        width: 29
+        height: 59
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da0ccd0097416714c893256cd9dcb1f7
-      internalID: 2076346449
+      spriteID: 04e5621456c2fd94483f4b1d2dc73d09
+      internalID: 2130060531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPRITES CENOURA FODA_2
+      name: FACAGirante_2
       rect:
         serializedVersion: 2
-        x: 3640
-        y: 537
-        width: 1054
-        height: 910
+        x: 1226
+        y: 497
+        width: 47
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a6f4745f99b30a48a02f9f65a04c05c
-      internalID: 525550736
+      spriteID: bfe9d755289faf2459aad1b9f7df7267
+      internalID: -1711724701
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPRITES CENOURA FODA_3
+      name: FACAGirante_3
       rect:
         serializedVersion: 2
-        x: 5243
-        y: 537
-        width: 1050
-        height: 910
+        x: 3435
+        y: 497
+        width: 50
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ace5f2f5a5cdf741a3fb4e4a7ff2c8d
-      internalID: -1440545329
+      spriteID: d464bd1e497f8854da45bde7c1f8f9a7
+      internalID: -1320958088
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPRITES CENOURA FODA_4
+      name: FACAGirante_4
       rect:
         serializedVersion: 2
-        x: 6841
-        y: 537
-        width: 1055
-        height: 910
+        x: 136
+        y: 497
+        width: 59
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66fc0cfba17b1214390abde048938cf6
-      internalID: -2050166065
+      spriteID: a03455f8dcf53a64eaab04114f7118ce
+      internalID: -1338875587
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPRITES CENOURA FODA_5
+      name: FACAGirante_5
       rect:
         serializedVersion: 2
-        x: 8440
-        y: 537
-        width: 1054
-        height: 910
+        x: 1768
+        y: 477
+        width: 59
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,8 +242,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d79b871e54632e04880073bbf2806733
-      internalID: -1564123077
+      spriteID: af5bc37c0dd66284a97923481eb66a7d
+      internalID: -1781544959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FACAGirante_6
+      rect:
+        serializedVersion: 2
+        x: 2796
+        y: 477
+        width: 59
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2fe03936e9f55b4caad266351a9386f
+      internalID: -1760800176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FACAGirante_7
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 315
+        width: 29
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30c6e2f966f0a5247b5ed3cb3910c879
+      internalID: -1423273183
       vertices: []
       indices: 
       edges: []
@@ -259,12 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SPRITES CENOURA FODA_0: -2105655216
-      SPRITES CENOURA FODA_1: 2076346449
-      SPRITES CENOURA FODA_2: 525550736
-      SPRITES CENOURA FODA_3: -1440545329
-      SPRITES CENOURA FODA_4: -2050166065
-      SPRITES CENOURA FODA_5: -1564123077
+      FACAGirante_0: 1303568771
+      FACAGirante_1: 2130060531
+      FACAGirante_2: -1711724701
+      FACAGirante_3: -1320958088
+      FACAGirante_4: -1338875587
+      FACAGirante_5: -1781544959
+      FACAGirante_6: -1760800176
+      FACAGirante_7: -1423273183
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -14,7 +14,8 @@ public class PlayerManager : MonoBehaviour
         public Animator playerAnimator;
         public Rigidbody2D playerRB;
         public InputManager inputManager;
-        public GameObject attack;
+        public GameObject playerAttackInHand;
+        public PlayerSpinningKnifeSpawner playerSpinningKnifeSpawner;
         public GameObject inGameMenu;
         public GameObject gameOverMenu;
         public CinemachineVirtualCamera virtualCamera;
@@ -26,6 +27,8 @@ public class PlayerManager : MonoBehaviour
         public Sprite deathSprite1;
         public float attackAnimationTotalTime;
         public float attackAnimationSwitchSpriteTime;
+        private int carrotQuantity = 0;
+        public int hitPoints;
 
     #endregion
     #region Player Data
@@ -53,7 +56,7 @@ public class PlayerManager : MonoBehaviour
         currentState.isGrounded = playerData.isGroundedInitialValue;
         currentState.isInvunerable = playerData.isInvunerableInitialValue;
         currentState.invunerableTime = playerData.invunerableTimeInitialValue;
-        currentState.hitPoints = playerData.hitPointsInitialValue;
+        hitPoints = playerData.hitPointsInitialValue;
         currentState.EnterState(this);
     }
 
@@ -92,51 +95,71 @@ public class PlayerManager : MonoBehaviour
         newState.isGrounded = currentState.isGrounded;
         newState.isInvunerable = currentState.isInvunerable;
         newState.invunerableTime = currentState.invunerableTime;
-        newState.hitPoints = currentState.hitPoints;
         currentState = newState;
         currentState.EnterState(this);
     }
 
     public void TakeDamage(int damage, Vector2 knockbackDirection)
     {
-        if(currentState.hitPoints - damage <= 0)
+        if(hitPoints - damage <= 0)
         {
-            playerDeath.hitPoints = 0;
+            hitPoints = 0;
             SwitchState(playerDeath);
         }
         else
         {
+            hitPoints = hitPoints - damage;
+            playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
             playerTakeDamage.isGrounded = currentState.isGrounded;
             playerTakeDamage.isInvunerable = true;
             playerTakeDamage.invunerableTime = currentState.invunerableTime;
-            playerTakeDamage.hitPoints = currentState.hitPoints - damage;
-            
             playerTakeDamage.knockbackDirection = knockbackDirection;
             SwitchState(playerTakeDamage);
         }
     }
 
+    public void AddCarrots(int carrotsCollected)
+    {
+        carrotQuantity += carrotsCollected;
+        if(carrotQuantity > 10)
+        {
+            carrotQuantity = 10;
+        }
+        if(carrotQuantity < 0)
+        {
+            carrotQuantity = 0;
+        }
+        carrotManager.UpdateCarrots(carrotQuantity);
+    }
+
+    public void AddLife(int lifeToAdd)
+    {
+        hitPoints += lifeToAdd;
+        if (hitPoints > playerData.maxHitPointsValue)
+        {
+            hitPoints = playerData.maxHitPointsValue;
+        }
+        if (hitPoints < 0)
+        {
+            hitPoints = 0;
+        }
+        playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
+    }
+
     void ApplyGlobalDefinitions()
     {
-    playerIdle.maxInvunerableTime = playerData.maxInvunerableTimeValue;
-    playerIdle.maxHitPoints = playerData.maxHitPointsValue;
+        playerIdle.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerWalk.maxInvunerableTime = playerData.maxInvunerableTimeValue;
-    playerWalk.maxHitPoints = playerData.maxHitPointsValue;
+        playerWalk.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerJump.maxInvunerableTime = playerData.maxInvunerableTimeValue;
-    playerJump.maxHitPoints = playerData.maxHitPointsValue;
+        playerJump.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
-    playerAttack.maxHitPoints = playerData.maxHitPointsValue;
+        playerAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerSpecialAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
-    playerSpecialAttack.maxHitPoints = playerData.maxHitPointsValue;
+        playerSpecialAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerTakeDamage.maxInvunerableTime = playerData.maxInvunerableTimeValue;
-    playerTakeDamage.maxHitPoints = playerData.maxHitPointsValue;
+        playerTakeDamage.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerDeath.maxInvunerableTime = playerData.maxInvunerableTimeValue;
-    playerDeath.maxHitPoints = playerData.maxHitPointsValue;
+        playerDeath.maxInvunerableTime = playerData.maxInvunerableTimeValue;
     }
 }
