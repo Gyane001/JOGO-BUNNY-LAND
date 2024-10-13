@@ -4,6 +4,7 @@ using Cinemachine;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.TextCore.Text;
 
 public class PlayerManager : MonoBehaviour
@@ -25,8 +26,6 @@ public class PlayerManager : MonoBehaviour
         public SpriteRenderer deathSpriteRenderer;
         public Sprite deathSprite0;
         public Sprite deathSprite1;
-        public float attackAnimationTotalTime;
-        public float attackAnimationSwitchSpriteTime;
         private int carrotQuantity = 0;
         public int hitPoints;
 
@@ -42,6 +41,7 @@ public class PlayerManager : MonoBehaviour
         public PlayerWalkState playerWalk = new PlayerWalkState();
         public PlayerJumpState playerJump = new PlayerJumpState();
         public PlayerAttackState playerAttack = new PlayerAttackState();
+        public PlayerJumpAttackState playerJumpAttack = new PlayerJumpAttackState();
         public PlayerSpecialAttackState playerSpecialAttack = new PlayerSpecialAttackState();
         public PlayerTakeDamageState playerTakeDamage = new PlayerTakeDamageState();
         public PlayerDeathState playerDeath = new PlayerDeathState();
@@ -55,7 +55,7 @@ public class PlayerManager : MonoBehaviour
         currentState = playerIdle;
         currentState.isGrounded = playerData.isGroundedInitialValue;
         currentState.isInvunerable = playerData.isInvunerableInitialValue;
-        currentState.invunerableTime = playerData.invunerableTimeInitialValue;
+        currentState.invunerableTotalTimer = playerData.invunerableTimeInitialValue;
         hitPoints = playerData.hitPointsInitialValue;
         currentState.EnterState(this);
     }
@@ -94,27 +94,38 @@ public class PlayerManager : MonoBehaviour
     {
         newState.isGrounded = currentState.isGrounded;
         newState.isInvunerable = currentState.isInvunerable;
-        newState.invunerableTime = currentState.invunerableTime;
+        newState.invunerableTotalTimer = currentState.invunerableTotalTimer;
+        newState.invunerableFlashTimer = currentState.invunerableFlashTimer;
+        newState.spriteVisibility = currentState.spriteVisibility;
+        newState.impulseWasGiven = currentState.impulseWasGiven;
+        newState.pendingUpImpulse = currentState.pendingUpImpulse;
+        newState.previousState = currentState.CurrentState(this);
         currentState = newState;
         currentState.EnterState(this);
     }
 
     public void TakeDamage(int damage, Vector2 knockbackDirection)
     {
-        if(hitPoints - damage <= 0)
+        if (currentState.isInvunerable == false)
         {
-            hitPoints = 0;
-            SwitchState(playerDeath);
-        }
-        else
-        {
-            hitPoints = hitPoints - damage;
-            playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
-            playerTakeDamage.isGrounded = currentState.isGrounded;
-            playerTakeDamage.isInvunerable = true;
-            playerTakeDamage.invunerableTime = currentState.invunerableTime;
-            playerTakeDamage.knockbackDirection = knockbackDirection;
-            SwitchState(playerTakeDamage);
+            if (hitPoints - damage <= 0)
+            {
+                hitPoints = 0;
+                SwitchState(playerDeath);
+            }
+            else
+            {
+                hitPoints = hitPoints - damage;
+                playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
+                playerTakeDamage.isGrounded = currentState.isGrounded;
+                playerTakeDamage.isInvunerable = true;
+                playerTakeDamage.invunerableTotalTimer = 0;
+                playerTakeDamage.invunerableFlashTimer = 0;
+                playerTakeDamage.spriteVisibility = true;
+                playerTakeDamage.knockbackDirection = knockbackDirection;
+                currentState = playerTakeDamage;
+                currentState.EnterState(this);
+            }
         }
     }
 

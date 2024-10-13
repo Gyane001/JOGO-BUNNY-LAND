@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: CrowData
   m_EditorClassIdentifier: 
   isInvunerableInitialValue: 0
-  invunerableTimeInitialValue: 0
+  invunerableTimerInitialValue: 0
   crowSpeed: 2
   crowDamage: 2
+  crowMaxInvunerabilityTime: 3
+  crowFlashTime: 0.1
   timeToStartWalk: 0.5
   questionMarkShowTime: 1
   exclamationShowTime: 1

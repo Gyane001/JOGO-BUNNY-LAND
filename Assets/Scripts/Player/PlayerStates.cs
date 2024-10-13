@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TMPro.Examples;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -16,7 +17,8 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void UpdateState(PlayerManager playerManager)
     {
-        if(playerManager.inputManager.jumpInput)
+        InvulnerabilityManager(playerManager);
+        if (playerManager.inputManager.jumpInput)
         {
             playerManager.SwitchState(playerManager.playerJump);
             return;
@@ -86,6 +88,35 @@ public class PlayerIdleState : PlayerBaseState
 
         playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
     }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
 
 public class PlayerWalkState : PlayerBaseState
@@ -97,7 +128,8 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void UpdateState(PlayerManager playerManager)
     {
-        if(playerManager.inputManager.jumpInput)
+        InvulnerabilityManager(playerManager);
+        if (playerManager.inputManager.jumpInput)
         {
             playerManager.SwitchState(playerManager.playerJump);
             return;
@@ -167,20 +199,56 @@ public class PlayerWalkState : PlayerBaseState
 
         playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
     }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
 
 public class PlayerJumpState : PlayerBaseState
 {   
-    bool impulseWasGiven;
     public override void EnterState(PlayerManager playerManager)
     {
         playerManager.playerAnimator.Play("Jump");
-        impulseWasGiven = false;
+        if(previousState != "JumpAttack")
+        { 
+            impulseWasGiven = false;
+        }
     }
 
     public override void UpdateState(PlayerManager playerManager)
     {
-
+        InvulnerabilityManager(playerManager);
+        if (playerManager.inputManager.attackInput)
+        {
+            playerManager.SwitchState(playerManager.playerJumpAttack);
+            return;
+        }
     }
 
     public override void FixedUpdateState(PlayerManager playerManager)
@@ -270,15 +338,54 @@ public class PlayerJumpState : PlayerBaseState
 
         playerManager.playerRB.AddForce(new Vector2(0, yImpulse), ForceMode2D.Impulse);
     }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
 
 public class PlayerAttackState : PlayerBaseState
 {
-    float time;
+    float timer;
+    float attackAnimationTotalTime;
+    float attackAnimationSpriteChangeTime;
     public override void EnterState(PlayerManager playerManager)
     {
-        playerManager.playerAnimator.PlayInFixedTime("Attack");
-        time = 0;
+        playerManager.playerAnimator.Play("Attack");
+        foreach (var clip in playerManager.playerAnimator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == "Attack")
+            {
+                attackAnimationTotalTime = clip.length;
+            }
+        }
+        timer = 0;
+        attackAnimationSpriteChangeTime = attackAnimationTotalTime / 2;
         playerManager.playerAttackInHand.SetActive(true);
         playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().offset = new Vector2(4.5f, 1.25f);
         playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().size = new Vector2(2f, 5f);
@@ -286,15 +393,26 @@ public class PlayerAttackState : PlayerBaseState
 
     public override void UpdateState(PlayerManager playerManager)
     {
-        if(time >=playerManager.attackAnimationSwitchSpriteTime)
+        InvulnerabilityManager(playerManager);
+        if (timer >= attackAnimationSpriteChangeTime)
         {
             playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().offset = new Vector2(5f, -2.75f);
             playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().size = new Vector2(5.5f, 1.75f);
         }
-        if(time >=playerManager.attackAnimationTotalTime)
+        if(timer >= attackAnimationTotalTime)
         {
             playerManager.playerAttackInHand.SetActive(false);
-            playerManager.playerSpinningKnifeSpawner.spawnSpinningKnife(playerManager.playerAttackInHand.transform, playerManager.gameObject.transform.rotation.y);
+            var playerAttackInHandTransformPosition = playerManager.playerAttackInHand.transform.position;
+            if (playerManager.playerRB.transform.rotation.eulerAngles.y > -1 && playerManager.playerRB.transform.rotation.eulerAngles.y < 1)
+            {
+                playerAttackInHandTransformPosition.x += 1;
+            }
+            else
+            {
+                playerAttackInHandTransformPosition.x -= 1;
+            }
+            playerAttackInHandTransformPosition.y -= 0.25f;
+            playerManager.playerSpinningKnifeSpawner.spawnSpinningKnife(playerAttackInHandTransformPosition, playerManager.gameObject.transform.rotation.y);
             if(playerManager.inputManager.jumpInput)
             {
                 playerManager.SwitchState(playerManager.playerJump);
@@ -313,7 +431,7 @@ public class PlayerAttackState : PlayerBaseState
         }
         else
         {
-            time += Time.deltaTime;
+            timer += Time.deltaTime;
         }
     }
 
@@ -365,18 +483,225 @@ public class PlayerAttackState : PlayerBaseState
 
         playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
     }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
 
-public class PlayerSpecialAttackState : PlayerBaseState
+public class PlayerJumpAttackState : PlayerBaseState
 {
+    float timer;
+    float attackAnimationTotalTime;
+    float attackAnimationSpriteChangeTime;
     public override void EnterState(PlayerManager playerManager)
     {
-        playerManager.playerAnimator.Play("SpecialAttack");
+        playerManager.playerAnimator.Play("JumpAttack");
+        timer = 0;
+        foreach (var clip in playerManager.playerAnimator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == "JumpAttack")
+            {
+                attackAnimationTotalTime = clip.length;
+            }
+        }
+        attackAnimationSpriteChangeTime = attackAnimationTotalTime / 2;
+        playerManager.playerAttackInHand.SetActive(true);
+        playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().offset = new Vector2(4.5f, 1.25f);
+        playerManager.playerAttackInHand.GetComponent<BoxCollider2D>().size = new Vector2(2f, 5f);
     }
 
     public override void UpdateState(PlayerManager playerManager)
     {
+        InvulnerabilityManager(playerManager);
+        if (timer >= playerManager.playerAnimator.GetCurrentAnimatorStateInfo(0).length)
+        {
+            playerManager.SwitchState(playerManager.playerJump);
+            var playerAttackInHandTransformPosition = playerManager.playerAttackInHand.transform.position;
+            if(playerManager.playerRB.transform.rotation.eulerAngles.y > -1 && playerManager.playerRB.transform.rotation.eulerAngles.y < 1)
+            {
+                playerAttackInHandTransformPosition.x += 1;
+            }
+            else
+            {
+                playerAttackInHandTransformPosition.x -= 1;
+            }
+            playerAttackInHandTransformPosition.y -= 0.25f;
+            playerManager.playerSpinningKnifeSpawner.spawnSpinningKnife(playerAttackInHandTransformPosition, playerManager.gameObject.transform.rotation.y);
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
 
+    public override void FixedUpdateState(PlayerManager playerManager)
+    {
+        if (!impulseWasGiven)
+        {
+            playerManager.playerRB.AddForce(new Vector2(0, playerManager.playerData.jumpForce), ForceMode2D.Impulse);
+            impulseWasGiven = true;
+            isGrounded = false;
+            UpImpulse(playerManager);
+        }
+        else if (pendingUpImpulse)
+        {
+            playerManager.playerRB.AddForce(new Vector2(0, 2 * playerManager.playerData.jumpForce), ForceMode2D.Impulse);
+            pendingUpImpulse = false;
+            UpImpulse(playerManager);
+        }
+        MovePlayer(playerManager);
+    }
+
+    public override string CurrentState(PlayerManager playerManager)
+    {
+        return "JumpAttack";
+    }
+
+    public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
+    {
+        if (collider.gameObject.tag == "DeathBarrier")
+        {
+            playerManager.SwitchState(playerManager.playerDeath);
+        }
+
+        foreach (ContactPoint2D contactPoint in collider.contacts)
+        {
+            if (collider.gameObject.tag == "ground" && contactPoint.normal.y > 0.5f)
+            {
+                isGrounded = true;
+                playerManager.SwitchState(playerManager.playerAttack);
+            }
+        }
+    }
+
+    public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)
+    {
+
+    }
+
+    public override void OnCollisionExit2D(PlayerManager playerManager, Collision2D collider)
+    {
+
+    }
+
+    void MovePlayer(PlayerManager playerManager)
+    {
+        float xImpulse = 0;
+        if (playerManager.inputManager.moveInput.x > 0)
+        {
+            playerManager.playerRB.transform.eulerAngles = new Vector2(0, 0);
+            xImpulse = playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if (playerManager.inputManager.moveInput.x < 0)
+        {
+            playerManager.playerRB.transform.eulerAngles = new Vector2(0, 180);
+            xImpulse = -playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if (playerManager.inputManager.moveInput.x == 0)
+        {
+            xImpulse = 0 - playerManager.playerRB.velocity.x;
+        }
+
+        playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
+    }
+
+    void UpImpulse(PlayerManager playerManager)
+    {
+        float yImpulse;
+        yImpulse = playerManager.playerData.jumpForce - playerManager.playerRB.velocity.y;
+
+        playerManager.playerRB.AddForce(new Vector2(0, yImpulse), ForceMode2D.Impulse);
+    }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
+}
+
+public class PlayerSpecialAttackState : PlayerBaseState
+{
+    float timer;
+    float specialAttackTotalAnimationTime;
+    float specialAttackTimeToShowHitbox;
+    public override void EnterState(PlayerManager playerManager)
+    {
+        playerManager.playerAnimator.Play("SpecialAttack");
+        timer = 0;
+        specialAttackTotalAnimationTime = playerManager.playerAnimator.GetCurrentAnimatorStateInfo(0).length;
+        specialAttackTimeToShowHitbox = specialAttackTotalAnimationTime / 2;
+    }
+
+    public override void UpdateState(PlayerManager playerManager)
+    {
+        InvulnerabilityManager(playerManager);
+        if (timer >= specialAttackTotalAnimationTime)
+        {
+            if (playerManager.inputManager.moveInput.x != 0)
+            {
+                playerManager.SwitchState(playerManager.playerWalk);
+                return;
+            }
+            else
+            {
+                playerManager.SwitchState(playerManager.playerIdle);
+                return;
+            }
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
     }
 
     public override void FixedUpdateState(PlayerManager playerManager)
@@ -406,12 +731,40 @@ public class PlayerSpecialAttackState : PlayerBaseState
     {
 
     }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
 
 public class PlayerTakeDamageState : PlayerBaseState
 {
     public Vector2 knockbackDirection;
-    bool impulseWasGiven;
     float timer;
     public override void EnterState(PlayerManager playerManager)
     {
@@ -422,7 +775,8 @@ public class PlayerTakeDamageState : PlayerBaseState
 
     public override void UpdateState(PlayerManager playerManager)
     {
-        if(timer > playerManager.playerAnimator.GetCurrentAnimatorStateInfo(0).length)
+        InvulnerabilityManager(playerManager);
+        if (timer > playerManager.playerAnimator.GetCurrentAnimatorStateInfo(0).length)
         {
             playerManager.SwitchState(playerManager.playerIdle);
         }
@@ -438,7 +792,8 @@ public class PlayerTakeDamageState : PlayerBaseState
         if(!impulseWasGiven)
         {
             knockbackDirection.Normalize();
-            knockbackDirection.x = playerManager.playerData.knockbackFromAttacks * knockbackDirection.x - playerManager.playerRB.velocity.x;
+            knockbackDirection.x = playerManager.playerData.knockbackFromAttacksHorizontal * knockbackDirection.x - playerManager.playerRB.velocity.x;
+            knockbackDirection.y = playerManager.playerData.knockbackFromAttacksVertical * knockbackDirection.y - playerManager.playerRB.velocity.y;
             playerManager.playerRB.AddForce(knockbackDirection, ForceMode2D.Impulse);
             impulseWasGiven = true;
         }
@@ -466,6 +821,35 @@ public class PlayerTakeDamageState : PlayerBaseState
     {
 
     }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
 
 public class PlayerDeathState : PlayerBaseState
@@ -485,7 +869,8 @@ public class PlayerDeathState : PlayerBaseState
 
     public override void UpdateState(PlayerManager playerManager)
     {
-        if(timer <= deathAnimationTotalTime)
+        InvulnerabilityManager(playerManager);
+        if (timer <= deathAnimationTotalTime)
         {
             for(int i=0; i<playerManager.deathAnimationPoints.childCount; i++)
             {
@@ -529,5 +914,34 @@ public class PlayerDeathState : PlayerBaseState
     public override void OnCollisionExit2D(PlayerManager playerManager, Collision2D collider)
     {
 
+    }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= playerManager.playerData.invunerabilityFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= playerManager.playerData.maxInvunerableTimeValue)
+            {
+                playerManager.playerRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
     }
 }

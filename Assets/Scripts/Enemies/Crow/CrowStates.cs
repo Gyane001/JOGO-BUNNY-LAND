@@ -25,7 +25,8 @@ public class CrowIdleState : CrowBaseState
 
     public override void UpdateState(CrowEnemyManager crowEnemyManager)
     {
-        if(showTime<crowEnemyManager.crowData.questionMarkShowTime)
+        InvulnerabilityManager(crowEnemyManager);
+        if (showTime<crowEnemyManager.crowData.questionMarkShowTime)
         {
             showTime += Time.deltaTime;
         }
@@ -64,21 +65,26 @@ public class CrowIdleState : CrowBaseState
 
     public override void OnHitBoxEnter2D(CrowEnemyManager crowEnemyManager, Collider2D collider)
     {
-        if(collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player")
         {
-            if(collider.transform.position.y > crowEnemyManager.crowHitBoxPosition.position.y)
+            if (collider.transform.position.y > crowEnemyManager.crowHitBoxPosition.position.y)
             {
                 collider.transform.GetComponent<PlayerManager>().currentState.pendingUpImpulse = true;
+                crowEnemyManager.crowCurrentState.pendingKnockback = true;
+                crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.GetComponent<PlayerManager>().playerData.attackKnockback;
+                crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x - collider.transform.position.x, 0);
+                crowEnemyManager.TakeDamage(collider.transform.GetComponent<PlayerManager>().playerData.attackDamage);
             }
             else
             {
                 collider.transform.GetComponent<PlayerManager>().TakeDamage(crowEnemyManager.crowData.crowDamage, new Vector2(collider.transform.position.x - crowEnemyManager.crowHitBoxPosition.position.x, 0));
             }
         }
-        if(collider.gameObject.tag == "PlayerAttack")
+        if (collider.gameObject.tag == "PlayerAttack")
         {
-            crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback,0), ForceMode2D.Impulse);
-            crowEnemyManager.TakeDamage(collider.transform.parent.GetComponent<PlayerManager>().playerData.attackDamage);
+            crowEnemyManager.crowCurrentState.pendingKnockback = true;
+            crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback;
+            crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x - collider.transform.position.x, 0);
         }
         if (collider.gameObject.tag == "SpinningKnife")
         {
@@ -89,6 +95,43 @@ public class CrowIdleState : CrowBaseState
             crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
             crowEnemyManager.TakeDamage(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackDamage);
             collider.transform.GetComponent<SpinningKnifeManager>().DestroyEarlier();
+        }
+    }
+
+    public override void OnHitBoxStay2D(CrowEnemyManager crowEnemyManager, Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            collider.transform.GetComponent<PlayerManager>().TakeDamage(crowEnemyManager.crowData.crowDamage, new Vector2(collider.transform.position.x - crowEnemyManager.crowHitBoxPosition.position.x, 0));
+        }
+    }
+
+    public override void InvulnerabilityManager(CrowEnemyManager crowEnemyManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= crowEnemyManager.crowData.crowFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    crowEnemyManager.crowRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    crowEnemyManager.crowRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= crowEnemyManager.crowData.crowMaxInvunerabilityTime)
+            {
+                crowEnemyManager.crowRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
         }
     }
 }
@@ -115,7 +158,8 @@ public class CrowWalkState : CrowBaseState
 
     public override void UpdateState(CrowEnemyManager crowEnemyManager)
     {
-        if(showExclamationTime>crowEnemyManager.crowData.exclamationShowTime)
+        InvulnerabilityManager(crowEnemyManager);
+        if (showExclamationTime>crowEnemyManager.crowData.exclamationShowTime)
         {
             crowEnemyManager.exclamation.SetActive(false);
         }
@@ -205,25 +249,26 @@ public class CrowWalkState : CrowBaseState
     {
         if(collider.gameObject.tag == "Player")
         {
-            if(collider.transform.position.y > crowEnemyManager.crowHitBoxPosition.position.y)
+            if(collider.transform.position.y > crowEnemyManager.crowHitBoxPosition.position.y && !isInvunerable)
             {
                 collider.transform.GetComponent<PlayerManager>().currentState.pendingUpImpulse = true;
                 crowEnemyManager.crowCurrentState.pendingKnockback = true;
                 crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.GetComponent<PlayerManager>().playerData.attackKnockback;
                 crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x- collider.transform.position.x,0);
+                crowEnemyManager.TakeDamage(collider.transform.GetComponent<PlayerManager>().playerData.attackDamage);
             }
             else
             {
                 collider.transform.GetComponent<PlayerManager>().TakeDamage(crowEnemyManager.crowData.crowDamage, new Vector2(collider.transform.position.x - crowEnemyManager.crowHitBoxPosition.position.x, 0));
             }
         }
-        if(collider.gameObject.tag == "PlayerAttack")
+        if(collider.gameObject.tag == "PlayerAttack" && !isInvunerable)
         {
             crowEnemyManager.crowCurrentState.pendingKnockback = true;
             crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback;
             crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x- collider.transform.position.x,0);
         }
-        if (collider.gameObject.tag == "SpinningKnife")
+        if (collider.gameObject.tag == "SpinningKnife" && !isInvunerable)
         {
             crowEnemyManager.crowCurrentState.pendingKnockback = true;
             crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback;
@@ -232,6 +277,43 @@ public class CrowWalkState : CrowBaseState
             crowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
             crowEnemyManager.TakeDamage(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackDamage);
             collider.transform.GetComponent<SpinningKnifeManager>().DestroyEarlier();
+        }
+    }
+
+    public override void OnHitBoxStay2D(CrowEnemyManager crowEnemyManager, Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            collider.transform.GetComponent<PlayerManager>().TakeDamage(crowEnemyManager.crowData.crowDamage, new Vector2(collider.transform.position.x - crowEnemyManager.crowHitBoxPosition.position.x, 0));
+        }
+    }
+
+    public override void InvulnerabilityManager(CrowEnemyManager crowEnemyManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= crowEnemyManager.crowData.crowFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    crowEnemyManager.crowRB.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    crowEnemyManager.crowRB.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= crowEnemyManager.crowData.crowMaxInvunerabilityTime)
+            {
+                crowEnemyManager.crowRB.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
         }
     }
 }

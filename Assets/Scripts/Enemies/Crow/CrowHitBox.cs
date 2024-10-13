@@ -10,4 +10,9 @@ public class CrowHitBox : MonoBehaviour
     {
         crowEnemyManager.OnHitBoxEnter2D(other);
     }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        crowEnemyManager.OnHitBoxStay2D(collision);
+    }
 }

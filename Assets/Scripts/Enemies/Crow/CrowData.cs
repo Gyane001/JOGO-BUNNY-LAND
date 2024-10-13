@@ -8,7 +8,7 @@ public class CrowData : ScriptableObject
     #region Initial Values
         [Header("Initial Values")]
         public bool isInvunerableInitialValue;
-        public float invunerableTimeInitialValue;
+        public float invunerableTimerInitialValue;
         [Space(10)]
     #endregion
 
@@ -16,6 +16,10 @@ public class CrowData : ScriptableObject
         [Header("Variables")]
         public float crowSpeed;
         public int crowDamage;
+
+        public float crowMaxInvunerabilityTime;
+        public float crowFlashTime;    
+
         public float timeToStartWalk;
         public float questionMarkShowTime;
         public float exclamationShowTime;

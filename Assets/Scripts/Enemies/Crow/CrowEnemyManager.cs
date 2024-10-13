@@ -60,9 +60,17 @@ public class CrowEnemyManager : MonoBehaviour
         crowCurrentState.OnHitBoxEnter2D(this, other);
     }
 
+    public void OnHitBoxStay2D(Collider2D other)
+    {
+        crowCurrentState.OnHitBoxStay2D(this, other);
+    }
 
     public void SwitchState(CrowBaseState newState)
     {
+        newState.isInvunerable = crowCurrentState.isInvunerable;
+        newState.invunerableTotalTimer = crowCurrentState.invunerableTotalTimer;
+        newState.invunerableFlashTimer = crowCurrentState.invunerableFlashTimer;
+        newState.spriteVisibility = crowCurrentState.spriteVisibility;
         crowCurrentState = newState;
         crowCurrentState.EnterState(this);
     }
@@ -70,9 +78,12 @@ public class CrowEnemyManager : MonoBehaviour
     public void TakeDamage(int damage)
     {
         crowCurrentHP -= damage;
+        crowCurrentState.isInvunerable = true;
+        crowCurrentState.invunerableTotalTimer = 0;
+        crowCurrentState.invunerableFlashTimer = 0;
+        crowCurrentState.spriteVisibility = true;
         if (crowCurrentHP < 0)
         {
-            this.gameObject.GetComponent<Animator>().enabled = false;
             this.gameObject.SetActive(false);
         }
     }

@@ -8,6 +8,10 @@ public abstract class CrowBaseState
     public float knockbackValue;
     public Vector2 knockbackDirection;
     public float knockbackTimer;
+    public bool isInvunerable;
+    public float invunerableTotalTimer;
+    public bool spriteVisibility;
+    public float invunerableFlashTimer;
     public abstract void EnterState(CrowEnemyManager crowEnemyManager);
 
     public abstract void UpdateState(CrowEnemyManager crowEnemyManager);
@@ -21,4 +25,8 @@ public abstract class CrowBaseState
     public abstract void OnRangeExit2D(CrowEnemyManager crowEnemyManager, Collider2D collider);
 
     public abstract void OnHitBoxEnter2D(CrowEnemyManager crowEnemyManager, Collider2D collider);
+
+    public abstract void OnHitBoxStay2D(CrowEnemyManager crowEnemyManager, Collider2D collider);
+
+    public abstract void InvulnerabilityManager(CrowEnemyManager crowEnemyManager);
 }

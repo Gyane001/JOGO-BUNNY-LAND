@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 708851e8e945ab849a7099b32d4876af
+guid: c868a057ee6751845aaa7cc6fa288281
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: espinho_0
+      name: GRAMA QUADRADO_0
       rect:
         serializedVersion: 2
-        x: 1134
-        y: 1014
-        width: 4812
-        height: 4932
+        x: 1220
+        y: 582
+        width: 1400
+        height: 994
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86538c937b8e3e84d8ef6e53798830ab
-      internalID: 1884895345
+      spriteID: 66637949d757e73458b5ae3802c7e79d
+      internalID: -1467334742
       vertices: []
       indices: 
       edges: []
@@ -154,7 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      espinho_0: 1884895345
+      GRAMA QUADRADO_0: -1467334742
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

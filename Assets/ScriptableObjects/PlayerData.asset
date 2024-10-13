@@ -17,11 +17,13 @@ MonoBehaviour:
   invunerableTimeInitialValue: 0
   hitPointsInitialValue: 20
   playerSpeed: 4
-  jumpForce: 35
-  knockbackFromAttacks: 5
+  jumpForce: 20
+  knockbackFromAttacksHorizontal: 5
+  knockbackFromAttacksVertical: 15
   attackDamage: 2
   attackKnockback: 20
   spinningKnifeSpeed: 6
   spinningKnifeDuration: 1
-  maxInvunerableTimeValue: 1
+  invunerabilityFlashTime: 0.1
+  maxInvunerableTimeValue: 1.5
   maxHitPointsValue: 20
