@@ -23,9 +23,10 @@ public class PlayerIdleState : PlayerBaseState
             playerManager.SwitchState(playerManager.playerJump);
             return;
         }
-        if(playerManager.inputManager.specialAttackInput)
+        if(playerManager.inputManager.specialAttackInput && playerManager.carrotQuantity >=5)
         {
             playerManager.SwitchState(playerManager.playerSpecialAttack);
+            playerManager.AddCarrots(-5);
             return;
         }
         if(playerManager.inputManager.attackInput)
@@ -134,7 +135,13 @@ public class PlayerWalkState : PlayerBaseState
             playerManager.SwitchState(playerManager.playerJump);
             return;
         }
-        if(playerManager.inputManager.attackInput)
+        if (playerManager.inputManager.specialAttackInput && playerManager.carrotQuantity >= 5)
+        {
+            playerManager.SwitchState(playerManager.playerSpecialAttack);
+            playerManager.AddCarrots(-5);
+            return;
+        }
+        if (playerManager.inputManager.attackInput)
         {
             playerManager.SwitchState(playerManager.playerAttack);
             return;
@@ -678,15 +685,26 @@ public class PlayerSpecialAttackState : PlayerBaseState
     {
         playerManager.playerAnimator.Play("SpecialAttack");
         timer = 0;
-        specialAttackTotalAnimationTime = playerManager.playerAnimator.GetCurrentAnimatorStateInfo(0).length;
+        foreach (var clip in playerManager.playerAnimator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == "SpecialAttack")
+            {
+                specialAttackTotalAnimationTime = clip.length;
+            }
+        }
         specialAttackTimeToShowHitbox = specialAttackTotalAnimationTime / 2;
     }
 
     public override void UpdateState(PlayerManager playerManager)
     {
         InvulnerabilityManager(playerManager);
+        if(timer >= specialAttackTimeToShowHitbox)
+        {
+            playerManager.playerSpecialAttackObj.SetActive(true);
+        }
         if (timer >= specialAttackTotalAnimationTime)
         {
+            playerManager.playerSpecialAttackObj.SetActive(false);
             if (playerManager.inputManager.moveInput.x != 0)
             {
                 playerManager.SwitchState(playerManager.playerWalk);
@@ -864,7 +882,6 @@ public class PlayerDeathState : PlayerBaseState
         timer = 0;
         playerManager.playerRB.bodyType = RigidbodyType2D.Static;
         playerManager.playerLifeManager.UpdateLife(0,playerManager.playerData.maxHitPointsValue);
-        
     }
 
     public override void UpdateState(PlayerManager playerManager)
@@ -943,5 +960,50 @@ public class PlayerDeathState : PlayerBaseState
                 isInvunerable = false;
             }
         }
+    }
+}
+
+public class PlayerEnterDoorState : PlayerBaseState
+{
+    public override void EnterState(PlayerManager playerManager)
+    {
+        isInvunerable = true;
+    }
+
+    public override void UpdateState(PlayerManager playerManager)
+    {
+
+    }
+
+    public override void FixedUpdateState(PlayerManager playerManager)
+    {
+        var xImpulse = 0 - playerManager.playerRB.velocity.x;
+
+        playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
+    }
+
+    public override string CurrentState(PlayerManager playerManager)
+    {
+        return "EnterDoor";
+    }
+
+    public override void OnCollisionEnter2D(PlayerManager playerManager, Collision2D collider)
+    {
+        
+    }
+
+    public override void OnCollisionStay2D(PlayerManager playerManager, Collision2D collider)
+    {
+
+    }
+
+    public override void OnCollisionExit2D(PlayerManager playerManager, Collision2D collider)
+    {
+
+    }
+
+    public override void InvulnerabilityManager(PlayerManager playerManager)
+    {
+        
     }
 }

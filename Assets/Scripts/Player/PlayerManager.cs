@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
         public Rigidbody2D playerRB;
         public InputManager inputManager;
         public GameObject playerAttackInHand;
+        public GameObject playerSpecialAttackObj;
         public PlayerSpinningKnifeSpawner playerSpinningKnifeSpawner;
         public GameObject inGameMenu;
         public GameObject gameOverMenu;
@@ -26,8 +27,9 @@ public class PlayerManager : MonoBehaviour
         public SpriteRenderer deathSpriteRenderer;
         public Sprite deathSprite0;
         public Sprite deathSprite1;
-        private int carrotQuantity = 0;
+        public int carrotQuantity = 0;
         public int hitPoints;
+        
 
     #endregion
     #region Player Data
@@ -45,6 +47,7 @@ public class PlayerManager : MonoBehaviour
         public PlayerSpecialAttackState playerSpecialAttack = new PlayerSpecialAttackState();
         public PlayerTakeDamageState playerTakeDamage = new PlayerTakeDamageState();
         public PlayerDeathState playerDeath = new PlayerDeathState();
+        public PlayerEnterDoorState playerEnterDoor = new PlayerEnterDoorState();
 
     #endregion
 

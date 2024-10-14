@@ -21,6 +21,7 @@ public class PlayerData : ScriptableObject
         public float knockbackFromAttacksHorizontal;
         public float knockbackFromAttacksVertical;
         public int attackDamage;
+        public int specialAttackDamage;
         public float attackKnockback;
         public float spinningKnifeSpeed;
         public float spinningKnifeDuration;

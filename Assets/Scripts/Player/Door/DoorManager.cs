@@ -31,6 +31,7 @@ public class DoorManager : MonoBehaviour
         if(other.gameObject.tag=="Player")
         {
             other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            other.gameObject.GetComponent<PlayerManager>().SwitchState(other.gameObject.GetComponent<PlayerManager>().playerEnterDoor);
             doorAnimator.Play("Transition");
             checkAnimation = true;
         }

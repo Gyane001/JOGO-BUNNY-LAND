@@ -8,6 +8,7 @@ TagManager:
   - PlayerAttack
   - DeathBarrier
   - SpinningKnife
+  - PlayerSpecialAttack
   layers:
   - Default
   - TransparentFX
