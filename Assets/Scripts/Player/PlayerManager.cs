@@ -1,39 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.TextCore.Text;
 
 public class PlayerManager : MonoBehaviour
 {
-    public PlayerBaseState currentState;
+    #region Player States Changer Variables
 
-    public Animator playerAnimator;
+        public PlayerBaseState currentState;
+        public Animator playerAnimator;
+        public Rigidbody2D playerRB;
+        public InputManager inputManager;
+        public GameObject playerAttackInHand;
+        public GameObject playerSpecialAttackObj;
+        public PlayerSpinningKnifeSpawner playerSpinningKnifeSpawner;
+        public GameObject inGameMenu;
+        public GameObject gameOverMenu;
+        public CinemachineVirtualCamera virtualCamera;
+        public CarrotManager carrotManager;
+        public PlayerLifeManager playerLifeManager;
+        public Transform deathAnimationPoints;
+        public SpriteRenderer deathSpriteRenderer;
+        public Sprite deathSprite0;
+        public Sprite deathSprite1;
+        public int carrotQuantity = 0;
+        public int hitPoints;
+        
 
-    public bool isGroundedInitialValue;
-    public bool isInvunerableInitialValue;
-    public float invunerableTimeInitialValue;
-    public float maxInvunerableTimeValue;
-    public int hitPointsInitialValue;
-    public int maxHitPointsValue;
+    #endregion
+    #region Player Data
 
-    public PlayerIdleState playerIdle = new PlayerIdleState();
-    public PlayerWalkState playerWalk = new PlayerWalkState();
-    public PlayerJumpState playerJump = new PlayerJumpState();
-    public PlayerAttackState playerAttack = new PlayerAttackState();
-    public PlayerSpecialAttackState playerSpecialAttack = new PlayerSpecialAttackState();
-    public PlayerTakeDamageState playerTakeDamage = new PlayerTakeDamageState();
-    public PlayerDeathState playerDeath = new PlayerDeathState();
+        public PlayerData playerData;
+
+    #endregion
+    #region Player States Instantiation
+
+        public PlayerIdleState playerIdle = new PlayerIdleState();
+        public PlayerWalkState playerWalk = new PlayerWalkState();
+        public PlayerJumpState playerJump = new PlayerJumpState();
+        public PlayerAttackState playerAttack = new PlayerAttackState();
+        public PlayerJumpAttackState playerJumpAttack = new PlayerJumpAttackState();
+        public PlayerSpecialAttackState playerSpecialAttack = new PlayerSpecialAttackState();
+        public PlayerTakeDamageState playerTakeDamage = new PlayerTakeDamageState();
+        public PlayerDeathState playerDeath = new PlayerDeathState();
+        public PlayerEnterDoorState playerEnterDoor = new PlayerEnterDoorState();
+
+    #endregion
 
     void Awake() 
     {
         ApplyGlobalDefinitions();
 
         currentState = playerIdle;
-        currentState.isGrounded = isGroundedInitialValue;
-        currentState.isInvunerable = isInvunerableInitialValue;
-        currentState.invunerableTime = invunerableTimeInitialValue;
-        currentState.hitPoints = hitPointsInitialValue;
+        currentState.isGrounded = playerData.isGroundedInitialValue;
+        currentState.isInvunerable = playerData.isInvunerableInitialValue;
+        currentState.invunerableTotalTimer = playerData.invunerableTimeInitialValue;
+        hitPoints = playerData.hitPointsInitialValue;
         currentState.EnterState(this);
     }
 
@@ -71,33 +97,83 @@ public class PlayerManager : MonoBehaviour
     {
         newState.isGrounded = currentState.isGrounded;
         newState.isInvunerable = currentState.isInvunerable;
-        newState.invunerableTime = currentState.invunerableTime;
-        newState.hitPoints = currentState.hitPoints;
+        newState.invunerableTotalTimer = currentState.invunerableTotalTimer;
+        newState.invunerableFlashTimer = currentState.invunerableFlashTimer;
+        newState.spriteVisibility = currentState.spriteVisibility;
+        newState.impulseWasGiven = currentState.impulseWasGiven;
+        newState.pendingUpImpulse = currentState.pendingUpImpulse;
+        newState.previousState = currentState.CurrentState(this);
         currentState = newState;
         currentState.EnterState(this);
     }
 
+    public void TakeDamage(int damage, Vector2 knockbackDirection)
+    {
+        if (currentState.isInvunerable == false)
+        {
+            if (hitPoints - damage <= 0)
+            {
+                hitPoints = 0;
+                SwitchState(playerDeath);
+            }
+            else
+            {
+                hitPoints = hitPoints - damage;
+                playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
+                playerTakeDamage.isGrounded = currentState.isGrounded;
+                playerTakeDamage.isInvunerable = true;
+                playerTakeDamage.invunerableTotalTimer = 0;
+                playerTakeDamage.invunerableFlashTimer = 0;
+                playerTakeDamage.spriteVisibility = true;
+                playerTakeDamage.knockbackDirection = knockbackDirection;
+                currentState = playerTakeDamage;
+                currentState.EnterState(this);
+            }
+        }
+    }
+
+    public void AddCarrots(int carrotsCollected)
+    {
+        carrotQuantity += carrotsCollected;
+        if(carrotQuantity > 10)
+        {
+            carrotQuantity = 10;
+        }
+        if(carrotQuantity < 0)
+        {
+            carrotQuantity = 0;
+        }
+        carrotManager.UpdateCarrots(carrotQuantity);
+    }
+
+    public void AddLife(int lifeToAdd)
+    {
+        hitPoints += lifeToAdd;
+        if (hitPoints > playerData.maxHitPointsValue)
+        {
+            hitPoints = playerData.maxHitPointsValue;
+        }
+        if (hitPoints < 0)
+        {
+            hitPoints = 0;
+        }
+        playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
+    }
+
     void ApplyGlobalDefinitions()
     {
-    playerIdle.maxInvunerableTime = maxInvunerableTimeValue;
-    playerIdle.maxHitPoints = maxHitPointsValue;
+        playerIdle.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerWalk.maxInvunerableTime = maxInvunerableTimeValue;
-    playerWalk.maxHitPoints = maxHitPointsValue;
+        playerWalk.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerJump.maxInvunerableTime = maxInvunerableTimeValue;
-    playerJump.maxHitPoints = maxHitPointsValue;
+        playerJump.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerAttack.maxInvunerableTime = maxInvunerableTimeValue;
-    playerAttack.maxHitPoints = maxHitPointsValue;
+        playerAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerSpecialAttack.maxInvunerableTime = maxInvunerableTimeValue;
-    playerSpecialAttack.maxHitPoints = maxHitPointsValue;
+        playerSpecialAttack.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerTakeDamage.maxInvunerableTime = maxInvunerableTimeValue;
-    playerTakeDamage.maxHitPoints = maxHitPointsValue;
+        playerTakeDamage.maxInvunerableTime = playerData.maxInvunerableTimeValue;
 
-    playerDeath.maxInvunerableTime = maxInvunerableTimeValue;
-    playerDeath.maxHitPoints = maxHitPointsValue;
+        playerDeath.maxInvunerableTime = playerData.maxInvunerableTimeValue;
     }
 }

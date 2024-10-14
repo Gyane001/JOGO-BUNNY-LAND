@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PISO
+  - ground
+  - PlayerAttack
+  - DeathBarrier
+  - SpinningKnife
+  - PlayerSpecialAttack
   layers:
   - Default
   - TransparentFX
@@ -13,8 +17,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
+  - Enemy
+  - Player
   - 
   - 
   - 

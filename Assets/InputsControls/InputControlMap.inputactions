@@ -12,7 +12,7 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Attack",
@@ -40,13 +40,49 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Walk Up",
+                    "type": "PassThrough",
+                    "id": "3f985776-2dac-4151-9819-e4190b0a653e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Walk Left",
+                    "type": "PassThrough",
+                    "id": "7545214b-15b9-48f7-994d-c089fd990c85",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Walk Down",
+                    "type": "PassThrough",
+                    "id": "cbcc9e4b-576c-478f-82d1-e132102facdf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Walk Right",
+                    "type": "PassThrough",
+                    "id": "5f0612c2-4a44-492f-98a4-5b84eb3accf0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "WASD",
                     "id": "ba75268f-0eea-462f-a732-58d6609d0a0f",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -101,7 +137,7 @@
                 {
                     "name": "Setinhas",
                     "id": "d45655fc-46d1-4c6b-aff5-13dabe7aeafd",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -205,6 +241,94 @@
                     "processors": "",
                     "groups": "Computador",
                     "action": "AttackSpecial",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "063c9acb-52b9-474c-9f6d-7dd6d81861d6",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ffd8b208-b2ce-455d-aaad-50c3d4d5b2ab",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c25dbe5-dfa3-4f8e-9d98-a303ea4e46df",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3634d044-23ca-42ef-ae1e-db620a964518",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ecfd4ae8-2fe7-4931-ac6e-9febc6508a19",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1cc685a8-785a-447a-bcdd-6e148d1fc2cc",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "475fef13-329d-4115-95f3-2cb7f7e41e99",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39db3319-a865-4928-9bd1-21f8baad7952",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computador",
+                    "action": "Walk Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
