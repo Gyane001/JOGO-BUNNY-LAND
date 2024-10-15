@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvunerableInitialValue: 0
   invunerableTimerInitialValue: 0
-  crowSpeed: 2
+  crowSpeed: 4
   crowDamage: 2
   crowMaxInvunerabilityTime: 0.5
   crowFlashTime: 0.1
