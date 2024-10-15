@@ -105,6 +105,10 @@ public class FlyingCrowIdleState : FlyingCrowBaseState
             //flyingCrowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
             flyingCrowEnemyManager.TakeDamage(collider.transform.GetComponent<PlayerManager>().playerData.specialAttackDamage);
         }
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            flyingCrowEnemyManager.DeactivateCrow();
+        }
     }
 
     public override void OnHitBoxStay2D(FlyingCrowEnemyManager flyingCrowEnemyManager, Collider2D collider)
@@ -301,6 +305,10 @@ public class FlyingCrowFlyState : FlyingCrowBaseState
 
             //flyingCrowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
             flyingCrowEnemyManager.TakeDamage(collider.transform.GetComponent<PlayerManager>().playerData.specialAttackDamage);
+        }
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            flyingCrowEnemyManager.DeactivateCrow();
         }
     }
 

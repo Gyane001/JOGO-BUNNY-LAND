@@ -434,7 +434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6532320310109892489}
-  - component: {fileID: 1273898982942770942}
+  - component: {fileID: 7177762252089958508}
   m_Layer: 7
   m_Name: CrowSolidBody
   m_TagString: Untagged
@@ -457,8 +457,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 659681955861649942}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1273898982942770942
-BoxCollider2D:
+--- !u!70 &7177762252089958508
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -490,18 +490,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6, y: 6}
-  m_EdgeRadius: 0
+  m_Size: {x: 5, y: 6}
+  m_Direction: 0
 --- !u!1 &5931622375335170222
 GameObject:
   m_ObjectHideFlags: 0

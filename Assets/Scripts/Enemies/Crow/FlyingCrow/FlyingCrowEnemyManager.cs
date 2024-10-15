@@ -88,4 +88,9 @@ public class FlyingCrowEnemyManager : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
+
+    public void DeactivateCrow()
+    {
+        this.gameObject.SetActive(false);
+    }
 }
