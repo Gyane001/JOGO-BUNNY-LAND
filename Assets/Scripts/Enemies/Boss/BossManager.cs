@@ -1,34 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossManager : MonoBehaviour
 {
     #region Boss States Changer Variables
-        public FlyingCrowBaseState crowCurrentState;
-        public Animator crowAnimator;
-        public Rigidbody2D crowRB;
-        public GameObject exclamation;
-        public GameObject questionMark;
-        public int crowCurrentHP;
-        public Transform crowHitBoxPosition;
+        public BossBaseState bossCurrentState;
+        public Animator bossAnimator;
+        public int bossCurrentHP;
+        public GameObject LifeBarObj;
+        public GameObject player;
+        public GameObject attackGrassPrefab;
+        public GameObject attackSporePrefab;
+        public Transform attackGrassMaxRange;
+        public Transform attackGrassMinRange;
+        public Transform attackSporeSpawnPositionTransform;
+        public Transform groundPositionTransform;
     #endregion
 
     #region Boss Data
-        public FlyingCrowData flyingCrowData;
+        public BossData bossData;
     #endregion
 
     #region Boss States Instantiation
-        public FlyingCrowIdleState crowIdle = new FlyingCrowIdleState();
-        public FlyingCrowFlyState crowFly = new FlyingCrowFlyState();
+        public BossBeforeSpawnState bossBeforeSpawn = new BossBeforeSpawnState();
+        public BossSpawnState bossSpawn = new BossSpawnState();
+        public BossIdleState bossIdle = new BossIdleState();
+        public BossAttackSporeState bossAttackSpore = new BossAttackSporeState();
+        public BossAttackGrassState bossAttackGrass = new BossAttackGrassState();
+        public BossDeathState bossDeath = new BossDeathState();
     #endregion
 
     void Awake()
     {
-        crowCurrentHP = flyingCrowData.crowMaxHP;
+        bossCurrentHP = bossData.bossMaxHP;
 
-        crowCurrentState = crowIdle;
-        //No needo to call crowCurrentState.EnterState(this), because I want a different behaviour on the first entrance
+        bossCurrentState = bossBeforeSpawn;
+        bossCurrentState.EnterState(this);
     }
     void Start()
     {
@@ -38,54 +48,96 @@ public class BossManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        crowCurrentState.UpdateState(this);
+        bossCurrentState.UpdateState(this);
     }
 
     void FixedUpdate()
     {
-        crowCurrentState.FixedUpdateState(this);
+        bossCurrentState.FixedUpdateState(this);
     }
 
     public void OnRangeEnter2D(Collider2D other)
     {
-        crowCurrentState.OnRangeEnter2D(this, other);
+        bossCurrentState.OnRangeEnter2D(this, other);
     }
 
     public void OnRangeExit2D(Collider2D other)
     {
-        crowCurrentState.OnRangeExit2D(this, other);
+        bossCurrentState.OnRangeExit2D(this, other);
     }
 
     public void OnHitBoxEnter2D(Collider2D other)
     {
-        crowCurrentState.OnHitBoxEnter2D(this, other);
+        bossCurrentState.OnHitBoxEnter2D(this, other);
     }
 
     public void OnHitBoxStay2D(Collider2D other)
     {
-        crowCurrentState.OnHitBoxStay2D(this, other);
+        bossCurrentState.OnHitBoxStay2D(this, other);
     }
 
-    public void SwitchState(FlyingCrowBaseState newState)
+    public void SwitchState(BossBaseState newState)
     {
-        newState.isInvunerable = crowCurrentState.isInvunerable;
-        newState.invunerableTotalTimer = crowCurrentState.invunerableTotalTimer;
-        newState.invunerableFlashTimer = crowCurrentState.invunerableFlashTimer;
-        newState.spriteVisibility = crowCurrentState.spriteVisibility;
-        crowCurrentState = newState;
-        crowCurrentState.EnterState(this);
+        newState.isInvunerable = bossCurrentState.isInvunerable;
+        newState.invunerableTotalTimer = bossCurrentState.invunerableTotalTimer;
+        newState.invunerableFlashTimer = bossCurrentState.invunerableFlashTimer;
+        newState.spriteVisibility = bossCurrentState.spriteVisibility;
+        newState.attackGrassTimer = bossCurrentState.attackGrassTimer;
+        newState.attackSporeTimer = bossCurrentState.attackSporeTimer;
+        bossCurrentState = newState;
+        bossCurrentState.EnterState(this);
     }
 
     public void TakeDamage(int damage)
     {
-        crowCurrentHP -= damage;
-        crowCurrentState.isInvunerable = true;
-        crowCurrentState.invunerableTotalTimer = 0;
-        crowCurrentState.invunerableFlashTimer = 0;
-        crowCurrentState.spriteVisibility = true;
-        if (crowCurrentHP < 0)
+        if(!bossCurrentState.isInvunerable && bossCurrentState != bossBeforeSpawn && bossCurrentState != bossSpawn && bossCurrentState != bossDeath)
         {
-            this.gameObject.SetActive(false);
+            bossCurrentHP -= damage;
+            bossCurrentState.isInvunerable = true;
+            bossCurrentState.invunerableTotalTimer = 0;
+            bossCurrentState.invunerableFlashTimer = 0;
+            bossCurrentState.spriteVisibility = true;
+            if (bossCurrentHP < 0)
+            {
+                bossCurrentHP = 0;
+                SwitchState(bossDeath);
+            }
+            UpdateLifeBar();
         }
+    }
+
+    public void SpawnSpores()
+    {
+        for(int i=0; i<bossData.bossAttackSporeNumberOfProjectilesPerShoot; i++)
+        {   
+            var spore=Instantiate(attackSporePrefab, attackSporeSpawnPositionTransform.position, quaternion.identity);
+            spore.GetComponent<SporeManager>().yInitialPosition = attackSporeSpawnPositionTransform.position.y;
+            spore.GetComponent<SporeManager>().yFinalPosition = groundPositionTransform.position.y;
+            spore.GetComponent<SporeManager>().xInitialPosition = attackSporeSpawnPositionTransform.position.x;
+            spore.GetComponent<SporeManager>().xFinalPosition = player.transform.position.x;
+        }
+    }
+
+    public void SpawnGrass()
+    {
+        for(int i=0; i<bossData.bossAttackGrassNumberOfGrass; i++)
+        {   
+            var randomXPosition = attackGrassMaxRange.position.x - attackGrassMinRange.position.x;
+            randomXPosition = UnityEngine.Random.Range(0, randomXPosition);
+            Vector3 temp = attackGrassMinRange.position;
+            temp.y = groundPositionTransform.position.y - bossData.bossAttackGrassSize/2;
+            temp.x += randomXPosition;
+            var grass=Instantiate(attackGrassPrefab, temp, quaternion.identity);
+        }
+    }
+
+    public void GoToCredits()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void UpdateLifeBar()
+    {
+        LifeBarObj.transform.Find("GreenPortion_N").transform.localScale = new Vector3((float)bossCurrentHP/bossData.bossMaxHP, LifeBarObj.transform.Find("GreenPortion_N").transform.localScale.y, LifeBarObj.transform.Find("GreenPortion_N").transform.localScale.z);
     }
 }

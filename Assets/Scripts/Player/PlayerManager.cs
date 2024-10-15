@@ -111,6 +111,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (currentState.isInvunerable == false)
         {
+            playerSpecialAttackObj.SetActive(false);
             if (hitPoints - damage <= 0)
             {
                 hitPoints = 0;

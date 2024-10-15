@@ -8,6 +8,8 @@ public abstract class BossBaseState
     public float invunerableTotalTimer;
     public bool spriteVisibility;
     public float invunerableFlashTimer;
+    public float attackGrassTimer = 0;
+    public float attackSporeTimer = 0;
     public abstract void EnterState(BossManager bossManager);
 
     public abstract void UpdateState(BossManager bossManager);
@@ -24,5 +26,32 @@ public abstract class BossBaseState
 
     public abstract void OnHitBoxStay2D(BossManager bossManager, Collider2D collider);
 
-    public abstract void InvulnerabilityManager(BossManager bossManager);
+    public void InvulnerabilityManager(BossManager bossManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= bossManager.bossData.bossFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    bossManager.bossAnimator.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    bossManager.bossAnimator.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= bossManager.bossData.bossMaxInvunerabilityTime)
+            {
+                bossManager.bossAnimator.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
