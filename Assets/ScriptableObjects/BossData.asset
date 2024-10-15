@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ccc8cd470ad37340bc28e641cd50e05, type: 3}
+  m_Name: BossData
+  m_EditorClassIdentifier: 
+  isInvunerableInitialValue: 0
+  invunerableTimerInitialValue: 0
+  bossTouchDamage: 5
+  bossAttackGrassDamage: 5
+  bossAttackSporeDamage: 2
+  bossAttackGrassCooldown: 3
+  bossAttackSporeCooldown: 6
+  bossAttackSporeOffsetPercentage: 0.5
+  bossAttackSporeNumberOfProjectilesPerShoot: 2
+  bossAttackSporeNumberOfShots: 2
+  bossAttackSporeVerticalSpeed: 10
+  bossAttackGrassOffsetPercentage: 0.5
+  bossAttackGrassWarningTime: 1
+  bossAttackGrassSize: 3
+  bossAttackGrassRiseTime: 0.2
+  bossAttackGrassNumberOfGrass: 4
+  bossAttackGrassTimeToDestroy: 2
+  bossMaxInvunerabilityTime: 1
+  bossFlashTime: 0.1
+  bossMaxHP: 20

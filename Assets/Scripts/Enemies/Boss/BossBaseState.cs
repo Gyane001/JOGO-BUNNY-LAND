@@ -8,21 +8,50 @@ public abstract class BossBaseState
     public float invunerableTotalTimer;
     public bool spriteVisibility;
     public float invunerableFlashTimer;
-    public abstract void EnterState(CrowEnemyManager crowEnemyManager);
+    public float attackGrassTimer = 0;
+    public float attackSporeTimer = 0;
+    public abstract void EnterState(BossManager bossManager);
 
-    public abstract void UpdateState(CrowEnemyManager crowEnemyManager);
+    public abstract void UpdateState(BossManager bossManager);
 
-    public abstract void FixedUpdateState(CrowEnemyManager crowEnemyManager);
+    public abstract void FixedUpdateState(BossManager bossManager);
 
-    public abstract string CurrentState(CrowEnemyManager crowEnemyManager);
+    public abstract string CurrentState(BossManager bossManager);
 
-    public abstract void OnRangeEnter2D(CrowEnemyManager crowEnemyManager, Collider2D collider);
+    public abstract void OnRangeEnter2D(BossManager bossManager, Collider2D collider);
 
-    public abstract void OnRangeExit2D(CrowEnemyManager crowEnemyManager, Collider2D collider);
+    public abstract void OnRangeExit2D(BossManager bossManager, Collider2D collider);
 
-    public abstract void OnHitBoxEnter2D(CrowEnemyManager crowEnemyManager, Collider2D collider);
+    public abstract void OnHitBoxEnter2D(BossManager bossManager, Collider2D collider);
 
-    public abstract void OnHitBoxStay2D(CrowEnemyManager crowEnemyManager, Collider2D collider);
+    public abstract void OnHitBoxStay2D(BossManager bossManager, Collider2D collider);
 
-    public abstract void InvulnerabilityManager(CrowEnemyManager crowEnemyManager);
+    public void InvulnerabilityManager(BossManager bossManager)
+    {
+        if (isInvunerable)
+        {
+            invunerableFlashTimer += Time.deltaTime;
+            invunerableTotalTimer += Time.deltaTime;
+            if (invunerableFlashTimer >= bossManager.bossData.bossFlashTime)
+            {
+                if (spriteVisibility)// Toggle sprite visibility
+                {
+                    bossManager.bossAnimator.GetComponent<SpriteRenderer>().enabled = false;
+                    spriteVisibility = false;
+                }
+                else
+                {
+                    bossManager.bossAnimator.GetComponent<SpriteRenderer>().enabled = true;
+                    spriteVisibility = true;
+                }
+                invunerableFlashTimer = 0;
+            }
+            if (invunerableTotalTimer >= bossManager.bossData.bossMaxInvunerabilityTime)
+            {
+                bossManager.bossAnimator.GetComponent<SpriteRenderer>().enabled = true;
+                spriteVisibility = true;
+                isInvunerable = false;
+            }
+        }
+    }
 }
