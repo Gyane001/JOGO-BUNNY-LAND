@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInvunerableInitialValue: 0
   invunerableTimerInitialValue: 0
-  bossTouchDamage: 5
+  bossTouchDamage: 10
   bossAttackGrassDamage: 5
-  bossAttackSporeDamage: 2
+  bossAttackSporeDamage: 4
   bossAttackGrassCooldown: 3
   bossAttackSporeCooldown: 6
   bossAttackSporeOffsetPercentage: 0.5
-  bossAttackSporeNumberOfProjectilesPerShoot: 2
-  bossAttackSporeNumberOfShots: 2
-  bossAttackSporeVerticalSpeed: 10
+  bossAttackSporeNumberOfProjectilesPerShoot: 8
+  bossAttackSporeNumberOfShots: 3
+  bossAttackSporeVerticalSpeed: 3
   bossAttackGrassOffsetPercentage: 0.5
   bossAttackGrassWarningTime: 1
   bossAttackGrassSize: 3
-  bossAttackGrassRiseTime: 0.2
-  bossAttackGrassNumberOfGrass: 4
-  bossAttackGrassTimeToDestroy: 2
+  bossAttackGrassRiseTime: 0.1
+  bossAttackGrassNumberOfGrass: 6
+  bossAttackGrassTimeToDestroy: 1
   bossMaxInvunerabilityTime: 1
   bossFlashTime: 0.1
-  bossMaxHP: 20
+  bossMaxHP: 50

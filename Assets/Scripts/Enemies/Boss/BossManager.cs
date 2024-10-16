@@ -7,30 +7,30 @@ using UnityEngine.SceneManagement;
 public class BossManager : MonoBehaviour
 {
     #region Boss States Changer Variables
-        public BossBaseState bossCurrentState;
-        public Animator bossAnimator;
-        public int bossCurrentHP;
-        public GameObject LifeBarObj;
-        public GameObject player;
-        public GameObject attackGrassPrefab;
-        public GameObject attackSporePrefab;
-        public Transform attackGrassMaxRange;
-        public Transform attackGrassMinRange;
-        public Transform attackSporeSpawnPositionTransform;
-        public Transform groundPositionTransform;
+    public BossBaseState bossCurrentState;
+    public Animator bossAnimator;
+    public int bossCurrentHP;
+    public GameObject LifeBarObj;
+    public GameObject player;
+    public GameObject attackGrassPrefab;
+    public GameObject attackSporePrefab;
+    public Transform attackGrassMaxRange;
+    public Transform attackGrassMinRange;
+    public Transform attackSporeSpawnPositionTransform;
+    public Transform groundPositionTransform;
     #endregion
 
     #region Boss Data
-        public BossData bossData;
+    public BossData bossData;
     #endregion
 
     #region Boss States Instantiation
-        public BossBeforeSpawnState bossBeforeSpawn = new BossBeforeSpawnState();
-        public BossSpawnState bossSpawn = new BossSpawnState();
-        public BossIdleState bossIdle = new BossIdleState();
-        public BossAttackSporeState bossAttackSpore = new BossAttackSporeState();
-        public BossAttackGrassState bossAttackGrass = new BossAttackGrassState();
-        public BossDeathState bossDeath = new BossDeathState();
+    public BossBeforeSpawnState bossBeforeSpawn = new BossBeforeSpawnState();
+    public BossSpawnState bossSpawn = new BossSpawnState();
+    public BossIdleState bossIdle = new BossIdleState();
+    public BossAttackSporeState bossAttackSpore = new BossAttackSporeState();
+    public BossAttackGrassState bossAttackGrass = new BossAttackGrassState();
+    public BossDeathState bossDeath = new BossDeathState();
     #endregion
 
     void Awake()
@@ -90,14 +90,14 @@ public class BossManager : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(!bossCurrentState.isInvunerable && bossCurrentState != bossBeforeSpawn && bossCurrentState != bossSpawn && bossCurrentState != bossDeath)
+        if (!bossCurrentState.isInvunerable && bossCurrentState != bossBeforeSpawn && bossCurrentState != bossSpawn && bossCurrentState != bossDeath)
         {
             bossCurrentHP -= damage;
             bossCurrentState.isInvunerable = true;
             bossCurrentState.invunerableTotalTimer = 0;
             bossCurrentState.invunerableFlashTimer = 0;
             bossCurrentState.spriteVisibility = true;
-            if (bossCurrentHP < 0)
+            if (bossCurrentHP <= 0)
             {
                 bossCurrentHP = 0;
                 SwitchState(bossDeath);
@@ -108,9 +108,9 @@ public class BossManager : MonoBehaviour
 
     public void SpawnSpores()
     {
-        for(int i=0; i<bossData.bossAttackSporeNumberOfProjectilesPerShoot; i++)
-        {   
-            var spore=Instantiate(attackSporePrefab, attackSporeSpawnPositionTransform.position, quaternion.identity);
+        for (int i = 0; i < bossData.bossAttackSporeNumberOfProjectilesPerShoot; i++)
+        {
+            var spore = Instantiate(attackSporePrefab, attackSporeSpawnPositionTransform.position, quaternion.identity);
             spore.GetComponent<SporeManager>().yInitialPosition = attackSporeSpawnPositionTransform.position.y;
             spore.GetComponent<SporeManager>().yFinalPosition = groundPositionTransform.position.y;
             spore.GetComponent<SporeManager>().xInitialPosition = attackSporeSpawnPositionTransform.position.x;
@@ -120,14 +120,14 @@ public class BossManager : MonoBehaviour
 
     public void SpawnGrass()
     {
-        for(int i=0; i<bossData.bossAttackGrassNumberOfGrass; i++)
-        {   
+        for (int i = 0; i < bossData.bossAttackGrassNumberOfGrass; i++)
+        {
             var randomXPosition = attackGrassMaxRange.position.x - attackGrassMinRange.position.x;
             randomXPosition = UnityEngine.Random.Range(0, randomXPosition);
             Vector3 temp = attackGrassMinRange.position;
-            temp.y = groundPositionTransform.position.y - bossData.bossAttackGrassSize/2;
+            temp.y = groundPositionTransform.position.y - bossData.bossAttackGrassSize / 2;
             temp.x += randomXPosition;
-            var grass=Instantiate(attackGrassPrefab, temp, quaternion.identity);
+            var grass = Instantiate(attackGrassPrefab, temp, quaternion.identity);
         }
     }
 
@@ -138,6 +138,6 @@ public class BossManager : MonoBehaviour
 
     public void UpdateLifeBar()
     {
-        LifeBarObj.transform.Find("GreenPortion_N").transform.localScale = new Vector3((float)bossCurrentHP/bossData.bossMaxHP, LifeBarObj.transform.Find("GreenPortion_N").transform.localScale.y, LifeBarObj.transform.Find("GreenPortion_N").transform.localScale.z);
+        LifeBarObj.transform.Find("GreenPortion_N").transform.localScale = new Vector3((float)bossCurrentHP / bossData.bossMaxHP, LifeBarObj.transform.Find("GreenPortion_N").transform.localScale.y, LifeBarObj.transform.Find("GreenPortion_N").transform.localScale.z);
     }
 }

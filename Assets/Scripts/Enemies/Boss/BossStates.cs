@@ -27,7 +27,7 @@ public class BossBeforeSpawnState : BossBaseState
 
     public override void OnRangeEnter2D(BossManager bossManager, Collider2D collider)
     {
-        if(collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player")
         {
             bossManager.SwitchState(bossManager.bossSpawn);
             return;
@@ -58,14 +58,14 @@ public class BossSpawnState : BossBaseState
     public override void EnterState(BossManager bossManager)
     {
         bossManager.bossAnimator.Play("Spawn");
-        
-        timer=0;
+
+        timer = 0;
         AnimatorController controller = bossManager.bossAnimator.runtimeAnimatorController as AnimatorController;
         foreach (var layer in controller.layers)
         {
             foreach (var state in layer.stateMachine.states)
             {
-                if(state.state.name == "Spawn")
+                if (state.state.name == "Spawn")
                 {
                     bossSpawnAnimationTotalTime = (state.state.motion as AnimationClip).length;
                     bossSpawnAnimationSpeed = state.state.speed;
@@ -77,7 +77,7 @@ public class BossSpawnState : BossBaseState
     public override void UpdateState(BossManager bossManager)
     {
         timer += Time.deltaTime * bossSpawnAnimationSpeed;
-        if(timer>=bossSpawnAnimationTotalTime)
+        if (timer >= bossSpawnAnimationTotalTime)
         {
             bossManager.SwitchState(bossManager.bossIdle);
             return;
@@ -129,12 +129,12 @@ public class BossIdleState : BossBaseState
 
         attackGrassTimer += Time.deltaTime;
         attackSporeTimer += Time.deltaTime;
-        if(attackGrassTimer >= bossManager.bossData.bossAttackGrassCooldown)
+        if (attackGrassTimer >= bossManager.bossData.bossAttackGrassCooldown)
         {
             bossManager.SwitchState(bossManager.bossAttackGrass);
             return;
         }
-        if(attackSporeTimer >= bossManager.bossData.bossAttackSporeCooldown)
+        if (attackSporeTimer >= bossManager.bossData.bossAttackSporeCooldown)
         {
             bossManager.SwitchState(bossManager.bossAttackSpore);
             return;
@@ -183,7 +183,7 @@ public class BossAttackSporeState : BossBaseState
     {
         bossManager.bossAnimator.Play("AttackSpore");
 
-        bossManager.bossCurrentState.attackSporeTimer=0;
+        bossManager.bossCurrentState.attackSporeTimer = 0;
 
         timer = 0;
         attackTimer = 0;
@@ -193,7 +193,7 @@ public class BossAttackSporeState : BossBaseState
         {
             foreach (var state in layer.stateMachine.states)
             {
-                if(state.state.name == "AttackSpore")
+                if (state.state.name == "AttackSpore")
                 {
                     bossAttackSporeAnimationTotalTime = (state.state.motion as AnimationClip).length;
                     bossAttackSporeAnimationSpeed = state.state.speed;
@@ -207,19 +207,19 @@ public class BossAttackSporeState : BossBaseState
         bossManager.bossCurrentState.InvulnerabilityManager(bossManager);
 
         timer += Time.deltaTime * bossAttackSporeAnimationSpeed;
-        if(timer>= bossAttackSporeAnimationTotalTime)
+        if (timer >= bossAttackSporeAnimationTotalTime)
         {
             bossManager.SwitchState(bossManager.bossIdle);
             return;
         }
-        if(timer>= bossManager.bossData.bossAttackSporeOffsetPercentage * bossAttackSporeAnimationTotalTime)
+        if (timer >= bossManager.bossData.bossAttackSporeOffsetPercentage * bossAttackSporeAnimationTotalTime)
         {
             attackTimer += Time.deltaTime * bossAttackSporeAnimationSpeed;
-            var fireTiming= (shotsFired * (bossAttackSporeAnimationTotalTime - bossManager.bossData.bossAttackSporeOffsetPercentage * bossAttackSporeAnimationTotalTime)/bossManager.bossData.bossAttackSporeNumberOfShots) + (bossAttackSporeAnimationTotalTime - bossManager.bossData.bossAttackSporeOffsetPercentage * bossAttackSporeAnimationTotalTime)/(2*bossManager.bossData.bossAttackSporeNumberOfShots);
-            if(attackTimer >= fireTiming)
+            var fireTiming = (shotsFired * (bossAttackSporeAnimationTotalTime - bossManager.bossData.bossAttackSporeOffsetPercentage * bossAttackSporeAnimationTotalTime) / bossManager.bossData.bossAttackSporeNumberOfShots) + (bossAttackSporeAnimationTotalTime - bossManager.bossData.bossAttackSporeOffsetPercentage * bossAttackSporeAnimationTotalTime) / (2 * bossManager.bossData.bossAttackSporeNumberOfShots);
+            if (attackTimer >= fireTiming)
             {
                 bossManager.SpawnSpores();
-                shotsFired +=1;
+                shotsFired += 1;
             }
         }
     }
@@ -266,7 +266,7 @@ public class BossAttackGrassState : BossBaseState
     {
         bossManager.bossAnimator.Play("AttackGrass");
 
-        bossManager.bossCurrentState.attackGrassTimer=0;
+        bossManager.bossCurrentState.attackGrassTimer = 0;
 
         timer = 0;
         attackTimer = 0;
@@ -276,7 +276,7 @@ public class BossAttackGrassState : BossBaseState
         {
             foreach (var state in layer.stateMachine.states)
             {
-                if(state.state.name == "AttackGrass")
+                if (state.state.name == "AttackGrass")
                 {
                     bossAttackGrassAnimationTotalTime = (state.state.motion as AnimationClip).length;
                     bossAttackGrassAnimationSpeed = state.state.speed;
@@ -290,20 +290,20 @@ public class BossAttackGrassState : BossBaseState
         bossManager.bossCurrentState.InvulnerabilityManager(bossManager);
 
         timer += Time.deltaTime * bossAttackGrassAnimationSpeed;
-        if(timer>= bossAttackGrassAnimationTotalTime)
+        if (timer >= bossAttackGrassAnimationTotalTime)
         {
             bossManager.SwitchState(bossManager.bossIdle);
             return;
         }
-        if(timer>= bossManager.bossData.bossAttackGrassOffsetPercentage * bossAttackGrassAnimationTotalTime)
+        if (timer >= bossManager.bossData.bossAttackGrassOffsetPercentage * bossAttackGrassAnimationTotalTime)
         {
             attackTimer += Time.deltaTime * bossAttackGrassAnimationSpeed;
-            var fireTiming= (bossAttackGrassAnimationTotalTime - bossManager.bossData.bossAttackGrassOffsetPercentage * bossAttackGrassAnimationTotalTime)/2f;
-            if(attackTimer >= fireTiming && !hasAttacked)
+            var fireTiming = (bossAttackGrassAnimationTotalTime - bossManager.bossData.bossAttackGrassOffsetPercentage * bossAttackGrassAnimationTotalTime) / 2f;
+            if (attackTimer >= fireTiming && !hasAttacked)
             {
                 bossManager.SpawnGrass();
                 attackTimer = 0;
-                hasAttacked=true;
+                hasAttacked = true;
             }
         }
     }
@@ -349,13 +349,13 @@ public class BossDeathState : BossBaseState
         bossManager.bossAnimator.Play("Death");
 
         bossManager.LifeBarObj.SetActive(false);
-        timer=0;
+        timer = 0;
         AnimatorController controller = bossManager.bossAnimator.runtimeAnimatorController as AnimatorController;
         foreach (var layer in controller.layers)
         {
             foreach (var state in layer.stateMachine.states)
             {
-                if(state.state.name == "Death")
+                if (state.state.name == "Death")
                 {
                     bossDeathAnimationTotalTime = (state.state.motion as AnimationClip).length;
                     bossDeathAnimationSpeed = state.state.speed;
@@ -367,7 +367,7 @@ public class BossDeathState : BossBaseState
     public override void UpdateState(BossManager bossManager)
     {
         timer += Time.deltaTime * Mathf.Abs(bossDeathAnimationSpeed);
-        if(timer>= bossDeathAnimationTotalTime + 0.5)
+        if (timer >= bossDeathAnimationTotalTime + 0.5)
         {
             bossManager.GoToCredits();
         }

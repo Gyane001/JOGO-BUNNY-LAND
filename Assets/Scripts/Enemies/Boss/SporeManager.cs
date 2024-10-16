@@ -13,14 +13,14 @@ public class SporeManager : MonoBehaviour
 
     void Start()
     {
-        float randomVerticalSpeed = UnityEngine.Random.Range(bossData.bossAttackSporeVerticalSpeed - 0.15f*bossData.bossAttackSporeVerticalSpeed, bossData.bossAttackSporeVerticalSpeed + 0.15f*bossData.bossAttackSporeVerticalSpeed);
-        timeToFall = SolveQuadratic(Physics.gravity.y/2, randomVerticalSpeed, yInitialPosition-yFinalPosition);
+        float randomVerticalSpeed = UnityEngine.Random.Range(bossData.bossAttackSporeVerticalSpeed - 0.45f * bossData.bossAttackSporeVerticalSpeed, bossData.bossAttackSporeVerticalSpeed + 0.45f * bossData.bossAttackSporeVerticalSpeed);
+        timeToFall = SolveQuadratic(Physics.gravity.y / 2, randomVerticalSpeed, yInitialPosition - yFinalPosition);
 
         float randomHorizontalSpeed = xFinalPosition - xInitialPosition;
-        randomHorizontalSpeed = randomHorizontalSpeed/timeToFall;
-        randomHorizontalSpeed = UnityEngine.Random.Range(randomHorizontalSpeed - 0.15f*randomHorizontalSpeed, randomHorizontalSpeed + 0.15f*randomHorizontalSpeed);
-        
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(randomHorizontalSpeed, randomVerticalSpeed),ForceMode2D.Impulse);
+        randomHorizontalSpeed = randomHorizontalSpeed / timeToFall;
+        randomHorizontalSpeed = UnityEngine.Random.Range(randomHorizontalSpeed - 0.45f * randomHorizontalSpeed, randomHorizontalSpeed + 0.45f * randomHorizontalSpeed);
+
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(randomHorizontalSpeed, randomVerticalSpeed), ForceMode2D.Impulse);
         Destroy(this.gameObject, timeToFall);
     }
 
@@ -33,11 +33,11 @@ public class SporeManager : MonoBehaviour
             float root1 = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
             float root2 = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
 
-            if(root1 > 0)
+            if (root1 > 0)
             {
                 return root1;
             }
-            if(root2 > 0)
+            if (root2 > 0)
             {
                 return root2;
             }
@@ -61,6 +61,6 @@ public class SporeManager : MonoBehaviour
             case "Player":
                 other.gameObject.GetComponent<PlayerManager>().TakeDamage(bossData.bossAttackSporeDamage, Vector2.right);
                 break;
-        } 
+        }
     }
 }

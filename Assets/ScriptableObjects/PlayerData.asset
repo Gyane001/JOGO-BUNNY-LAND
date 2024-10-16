@@ -21,7 +21,7 @@ MonoBehaviour:
   knockbackFromAttacksHorizontal: 5
   knockbackFromAttacksVertical: 15
   attackDamage: 2
-  specialAttackDamage: 0
+  specialAttackDamage: 6
   attackKnockback: 20
   spinningKnifeSpeed: 6
   spinningKnifeDuration: 1
