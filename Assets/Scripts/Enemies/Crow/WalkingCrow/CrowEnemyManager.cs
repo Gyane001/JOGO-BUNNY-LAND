@@ -88,4 +88,9 @@ public class CrowEnemyManager : MonoBehaviour
         }
     }
 
+
+    public void DeactivateCrow()
+    {
+        this.gameObject.SetActive(false);
+    }
 }

@@ -286,6 +286,7 @@ public class PlayerJumpState : PlayerBaseState
         if(collider.gameObject.tag == "DeathBarrier")
         {
             playerManager.SwitchState(playerManager.playerDeath);
+            return;
         }
         
         foreach (ContactPoint2D contactPoint in collider.contacts)
@@ -886,7 +887,6 @@ public class PlayerDeathState : PlayerBaseState
 
     public override void UpdateState(PlayerManager playerManager)
     {
-        InvulnerabilityManager(playerManager);
         if (timer <= deathAnimationTotalTime)
         {
             for(int i=0; i<playerManager.deathAnimationPoints.childCount; i++)

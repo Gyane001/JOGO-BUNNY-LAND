@@ -108,6 +108,10 @@ public class CrowIdleState : CrowBaseState
             //flyingCrowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
             crowEnemyManager.TakeDamage(collider.transform.GetComponent<PlayerManager>().playerData.specialAttackDamage);
         }
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            crowEnemyManager.DeactivateCrow();
+        }
     }
 
     public override void OnHitBoxStay2D(CrowEnemyManager crowEnemyManager, Collider2D collider)
@@ -296,11 +300,15 @@ public class CrowWalkState : CrowBaseState
         if (collider.gameObject.tag == "PlayerSpecialAttack" && !isInvunerable)
         {
             crowEnemyManager.crowCurrentState.pendingKnockback = true;
-            crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback;
+            crowEnemyManager.crowCurrentState.knockbackValue = collider.transform.parent.GetComponent<PlayerManager>().playerData.attackKnockback;
             crowEnemyManager.crowCurrentState.knockbackDirection = new Vector2(crowEnemyManager.crowHitBoxPosition.position.x - collider.transform.position.x, 0);
 
             //flyingCrowEnemyManager.crowRB.AddForce(new Vector2(collider.transform.GetComponent<SpinningKnifeManager>().playerData.attackKnockback, 0), ForceMode2D.Impulse);
-            crowEnemyManager.TakeDamage(collider.transform.GetComponent<PlayerManager>().playerData.specialAttackDamage);
+            crowEnemyManager.TakeDamage(collider.transform.parent.GetComponent<PlayerManager>().playerData.specialAttackDamage);
+        }
+        if(collider.gameObject.tag == "DeathBarrier")
+        {
+            crowEnemyManager.DeactivateCrow();
         }
     }
 
@@ -310,6 +318,7 @@ public class CrowWalkState : CrowBaseState
         {
             collider.transform.GetComponent<PlayerManager>().TakeDamage(crowEnemyManager.crowData.crowDamage, new Vector2(collider.transform.position.x - crowEnemyManager.crowHitBoxPosition.position.x, 0));
         }
+        
     }
 
     public override void InvulnerabilityManager(CrowEnemyManager crowEnemyManager)
