@@ -34,6 +34,15 @@ public class BossData : ScriptableObject
         [Space(10)]
     #endregion
 
+    #region Animation Variables
+        [Header("Animation Variables")]
+        public float bossSpawnAnimationSpeedMultiplier;
+        public float bossAttackSporeAnimationSpeedMultiplier;
+        public float bossAttackGrassAnimationSpeedMultiplier;
+        public float bossDeathAnimationSpeedMultiplier;
+
+    #endregion
+
     #region Max Values
         [Header("Max Values")]
         public int bossMaxHP;
