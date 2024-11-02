@@ -4,7 +4,6 @@ using System.Xml.Linq;
 using TMPro.Examples;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
