@@ -13,12 +13,12 @@ public class SporeManager : MonoBehaviour
 
     void Start()
     {
-        float randomVerticalSpeed = UnityEngine.Random.Range(bossData.bossAttackSporeVerticalSpeed - 0.45f * bossData.bossAttackSporeVerticalSpeed, bossData.bossAttackSporeVerticalSpeed + 0.45f * bossData.bossAttackSporeVerticalSpeed);
+        float randomVerticalSpeed = UnityEngine.Random.Range(bossData.bossAttackSporeVerticalSpeed - 0.40f * bossData.bossAttackSporeVerticalSpeed, bossData.bossAttackSporeVerticalSpeed + 0.40f * bossData.bossAttackSporeVerticalSpeed);
         timeToFall = SolveQuadratic(Physics.gravity.y / 2, randomVerticalSpeed, yInitialPosition - yFinalPosition);
 
         float randomHorizontalSpeed = xFinalPosition - xInitialPosition;
         randomHorizontalSpeed = randomHorizontalSpeed / timeToFall;
-        randomHorizontalSpeed = UnityEngine.Random.Range(randomHorizontalSpeed - 0.45f * randomHorizontalSpeed, randomHorizontalSpeed + 0.45f * randomHorizontalSpeed);
+        randomHorizontalSpeed = UnityEngine.Random.Range(randomHorizontalSpeed - 0.40f * randomHorizontalSpeed, randomHorizontalSpeed + 0.40f * randomHorizontalSpeed);
 
         GetComponent<Rigidbody2D>().AddForce(new Vector2(randomHorizontalSpeed, randomVerticalSpeed), ForceMode2D.Impulse);
         Destroy(this.gameObject, timeToFall);

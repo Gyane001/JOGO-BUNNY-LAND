@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e7b4b87db920bdc4c9f8e794ff6641b1
+guid: a62dd4057941b2f48a257cddeb8c9d41
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "C\xF3pia de INICIAR (Apresenta\xE7\xE3o) (5)_0"
+      name: sprites BUNNY LAND_0
       rect:
         serializedVersion: 2
-        x: 530
-        y: 235
-        width: 2780
-        height: 1690
+        x: 203
+        y: 700
+        width: 915
+        height: 915
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +111,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4afeede8bb6d134fb6fe9c67f6552b4
-      internalID: -1013448905
+      spriteID: f9c4028e529509a4ba78922ba17ca289
+      internalID: 807533067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprites BUNNY LAND_1
+      rect:
+        serializedVersion: 2
+        x: 1267
+        y: 687
+        width: 915
+        height: 913
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b7dab1e52c5eb342a2eba2d66a097be
+      internalID: 2094937326
       vertices: []
       indices: 
       edges: []
@@ -128,7 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "C\xF3pia de INICIAR (Apresenta\xE7\xE3o) (5)_0": -1013448905
+      sprites BUNNY LAND_0: 807533067
+      sprites BUNNY LAND_1: 2094937326
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

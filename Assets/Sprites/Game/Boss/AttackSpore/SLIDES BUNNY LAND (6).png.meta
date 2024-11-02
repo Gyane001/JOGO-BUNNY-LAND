@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e7b4b87db920bdc4c9f8e794ff6641b1
+guid: f44b1da31e504264a82595896da9df3c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "C\xF3pia de INICIAR (Apresenta\xE7\xE3o) (5)_0"
+      name: SLIDES BUNNY LAND (6)_0
       rect:
         serializedVersion: 2
-        x: 530
-        y: 235
-        width: 2780
-        height: 1690
+        x: 1308
+        y: 473
+        width: 1228
+        height: 1229
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4afeede8bb6d134fb6fe9c67f6552b4
-      internalID: -1013448905
+      spriteID: 6a2970587f68a7143b44dc613c8b321b
+      internalID: 1397211069
       vertices: []
       indices: 
       edges: []
@@ -128,7 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "C\xF3pia de INICIAR (Apresenta\xE7\xE3o) (5)_0": -1013448905
+      SLIDES BUNNY LAND (6)_0: 1397211069
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

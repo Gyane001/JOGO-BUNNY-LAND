@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 882387dbb23881245b5fee2f90fc868b
+guid: ec333d4f0b815484d96dade7ac3518b9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixil-frame-0 (10)_1
+      name: sprites BUNNY LAND (5)_0
       rect:
         serializedVersion: 2
-        x: 269
-        y: 336
-        width: 516
-        height: 416
+        x: 1379
+        y: 368
+        width: 1123
+        height: 182
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd2297a513a244e4d8dd21e0b4905f2c
-      internalID: 1081043178
+      spriteID: 52ea0585f1d2c274fa756f79e1b5999c
+      internalID: -118619477
       vertices: []
       indices: 
       edges: []
@@ -128,18 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      pixil-frame-0 (10)_0: 1034504355
-      pixil-frame-0 (10)_1: 1081043178
-      pixil-frame-0 (10)_10: -1059530968
-      pixil-frame-0 (10)_11: 80791089
-      pixil-frame-0 (10)_2: -100108342
-      pixil-frame-0 (10)_3: 1732058096
-      pixil-frame-0 (10)_4: -2085067273
-      pixil-frame-0 (10)_5: 1672072846
-      pixil-frame-0 (10)_6: 798113135
-      pixil-frame-0 (10)_7: -56043256
-      pixil-frame-0 (10)_8: 408055737
-      pixil-frame-0 (10)_9: 58165147
+      sprites BUNNY LAND (5)_0: -118619477
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

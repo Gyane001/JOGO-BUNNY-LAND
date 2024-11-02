@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2d1aeed7cd78dd7479f953ce2be39a10
+guid: 80af3696fbb28194ca337253de9b96a5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: SLIDES BUNNY LAND (5)_0
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 327
+        width: 391
+        height: 1485
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 613e09b3cb882ec4f9d9bd4d4e30164d
+      internalID: 111620869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SLIDES BUNNY LAND (5)_1
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 327
+        width: 393
+        height: 1485
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b9cdfb1d7645c443b6a6d4940a1ae2e
+      internalID: -934210084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SLIDES BUNNY LAND (5)_2
+      rect:
+        serializedVersion: 2
+        x: 2204
+        y: 327
+        width: 394
+        height: 1416
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd54243ec9f0afa4da34260682f04f57
+      internalID: -1585258223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SLIDES BUNNY LAND (5)_3
+      rect:
+        serializedVersion: 2
+        x: 3226
+        y: 327
+        width: 394
+        height: 1416
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 300648cac1915084b951a3da2f13b9da
+      internalID: -749760538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +190,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SLIDES BUNNY LAND (5)_0: 111620869
+      SLIDES BUNNY LAND (5)_1: -934210084
+      SLIDES BUNNY LAND (5)_2: -1585258223
+      SLIDES BUNNY LAND (5)_3: -749760538
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

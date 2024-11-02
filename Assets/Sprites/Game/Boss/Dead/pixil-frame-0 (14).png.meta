@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e7b4b87db920bdc4c9f8e794ff6641b1
+guid: 8a5086bddf6370a498e8d6d5b3abfe9d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,22 +97,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "C\xF3pia de INICIAR (Apresenta\xE7\xE3o) (5)_0"
+      name: pixil-frame-0 (14)_1
       rect:
         serializedVersion: 2
-        x: 530
-        y: 235
-        width: 2780
-        height: 1690
+        x: 341
+        y: 400
+        width: 639
+        height: 520
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4afeede8bb6d134fb6fe9c67f6552b4
-      internalID: -1013448905
+      spriteID: 4972de8b5e96b0f43b15cc2521ad606b
+      internalID: 1372893268
       vertices: []
       indices: 
       edges: []
@@ -128,7 +128,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "C\xF3pia de INICIAR (Apresenta\xE7\xE3o) (5)_0": -1013448905
+      pixil-frame-0 (14)_0: 2145181444
+      pixil-frame-0 (14)_1: 1372893268
+      pixil-frame-0 (14)_10: 1592506925
+      pixil-frame-0 (14)_11: 1298605707
+      pixil-frame-0 (14)_2: -315826447
+      pixil-frame-0 (14)_3: 541859977
+      pixil-frame-0 (14)_4: 895723077
+      pixil-frame-0 (14)_5: -1590551863
+      pixil-frame-0 (14)_6: -599719532
+      pixil-frame-0 (14)_7: 803323235
+      pixil-frame-0 (14)_8: 746781541
+      pixil-frame-0 (14)_9: -1799441434
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
