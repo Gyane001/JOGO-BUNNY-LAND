@@ -1837,6 +1837,18 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1944827958}
+    - target: {fileID: 1053887122491296812, guid: 45f38c851b4bb89409ae55763c5056a1, type: 3}
+      propertyPath: Priority
+      value: 137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053887122491296812, guid: 45f38c851b4bb89409ae55763c5056a1, type: 3}
+      propertyPath: m_Volume
+      value: 0.285
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053887122491296812, guid: 45f38c851b4bb89409ae55763c5056a1, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 268abc23141740642963f3cff7414d3a, type: 3}
     - target: {fileID: 2928850620210587100, guid: 45f38c851b4bb89409ae55763c5056a1, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

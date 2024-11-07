@@ -31,7 +31,7 @@ MonoBehaviour:
   bossAttackGrassTimeToDestroy: 2
   bossMaxInvunerabilityTime: 1
   bossFlashTime: 0.1
-  bossBackgroundMusic: {fileID: 8300000, guid: fcc08a586a460664cb4e6323979b25f0, type: 3}
+  bossBackgroundMusic: {fileID: 8300000, guid: 57842ddd98c4ce744a75d17d9aedd94f, type: 3}
   bossLaugh: {fileID: 8300000, guid: 8be2b9bec9f78304e8414179adc93ba5, type: 3}
   bossDamageSounds:
   - {fileID: 8300000, guid: df2e3b9bc3c7a5642ae286311b165115, type: 3}
@@ -39,11 +39,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: de07775f820a39b47a220d6b9a8eb35e, type: 3}
   - {fileID: 8300000, guid: 64b96d83e4e045644a9701185f228cff, type: 3}
   bossSporeSpawnSound: {fileID: 8300000, guid: 0a7121e1ff608894d894bf1f1e3dc014, type: 3}
-  bossVinesSpawnSound: {fileID: 8300000, guid: dd7e766b113aa37499ffebaa5a75f720, type: 3}
+  bossVinesSpawnSound: {fileID: 8300000, guid: 6e3ee0d41a7c26847ab9faab8990d19f, type: 3}
   bossDeathSound: {fileID: 8300000, guid: 179370aa640b50848b6fd91e38a6e853, type: 3}
   bossSpawnAnimationSpeedMultiplier: 1
   bossIdleAnimationSpeedMultiplier: 0.5
   bossAttackSporeAnimationSpeedMultiplier: 1
   bossAttackGrassAnimationSpeedMultiplier: 0.7
   bossDeathAnimationSpeedMultiplier: 1
-  bossMaxHP: 20
+  bossMaxHP: 50
