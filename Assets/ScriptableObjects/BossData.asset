@@ -31,4 +31,8 @@ MonoBehaviour:
   bossAttackGrassTimeToDestroy: 2
   bossMaxInvunerabilityTime: 1
   bossFlashTime: 0.1
+  bossSpawnAnimationSpeedMultiplier: 1
+  bossAttackSporeAnimationSpeedMultiplier: 1
+  bossAttackGrassAnimationSpeedMultiplier: 0.7
+  bossDeathAnimationSpeedMultiplier: 1
   bossMaxHP: 20
