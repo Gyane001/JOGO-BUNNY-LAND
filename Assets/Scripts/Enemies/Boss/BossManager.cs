@@ -18,6 +18,8 @@ public class BossManager : MonoBehaviour
         public Transform attackGrassMinRange;
         public Transform attackSporeSpawnPositionTransform;
         public Transform groundPositionTransform;
+        public AudioSource backgroundMusic;
+        public AudioSource soundEffects;
     #endregion
 
     #region Boss Data
@@ -92,12 +94,13 @@ public class BossManager : MonoBehaviour
     {
         if(!bossCurrentState.isInvunerable && bossCurrentState != bossBeforeSpawn && bossCurrentState != bossSpawn && bossCurrentState != bossDeath)
         {
+            soundEffects.PlayOneShot(bossData.bossDamageSounds[UnityEngine.Random.Range(0, bossData.bossDamageSounds.Length)]);
             bossCurrentHP -= damage;
             bossCurrentState.isInvunerable = true;
             bossCurrentState.invunerableTotalTimer = 0;
             bossCurrentState.invunerableFlashTimer = 0;
             bossCurrentState.spriteVisibility = true;
-            if (bossCurrentHP < 0)
+            if (bossCurrentHP <= 0)
             {
                 bossCurrentHP = 0;
                 SwitchState(bossDeath);

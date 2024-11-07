@@ -26,6 +26,14 @@ public class PlayerData : ScriptableObject
         public float spinningKnifeSpeed;
         public float spinningKnifeDuration;
         public float invunerabilityFlashTime;
+        public AudioClip playerTakeCarrotSound;
+        public AudioClip playerTakeHeartSound;
+        public AudioClip playerTakeDamageSound;
+        public AudioClip playerDeathSound;
+        public AudioClip playerJumpSound;
+        public AudioClip playerFallingSound;
+        public AudioClip playerKnifeSound;
+        public AudioClip playerSpecialAttackSound;
         [Space(10)]
     #endregion
 

@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour
         public Sprite deathSprite1;
         public int carrotQuantity = 0;
         public int hitPoints;
+        public AudioSource soundEffects;
         
 
     #endregion
@@ -112,23 +113,28 @@ public class PlayerManager : MonoBehaviour
         if (currentState.isInvunerable == false)
         {
             playerSpecialAttackObj.SetActive(false);
-            if (hitPoints - damage <= 0)
+            if(hitPoints > 0)
             {
-                hitPoints = 0;
-                SwitchState(playerDeath);
-            }
-            else
-            {
-                hitPoints = hitPoints - damage;
-                playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
-                playerTakeDamage.isGrounded = currentState.isGrounded;
-                playerTakeDamage.isInvunerable = true;
-                playerTakeDamage.invunerableTotalTimer = 0;
-                playerTakeDamage.invunerableFlashTimer = 0;
-                playerTakeDamage.spriteVisibility = true;
-                playerTakeDamage.knockbackDirection = knockbackDirection;
-                currentState = playerTakeDamage;
-                currentState.EnterState(this);
+                if (hitPoints - damage <= 0)
+                {
+                    soundEffects.PlayOneShot(playerData.playerDeathSound);
+                    hitPoints = 0;
+                    SwitchState(playerDeath);
+                }
+                else
+                {
+                    soundEffects.PlayOneShot(playerData.playerTakeDamageSound);
+                    hitPoints = hitPoints - damage;
+                    playerLifeManager.UpdateLife(hitPoints, playerData.maxHitPointsValue);
+                    playerTakeDamage.isGrounded = currentState.isGrounded;
+                    playerTakeDamage.isInvunerable = true;
+                    playerTakeDamage.invunerableTotalTimer = 0;
+                    playerTakeDamage.invunerableFlashTimer = 0;
+                    playerTakeDamage.spriteVisibility = true;
+                    playerTakeDamage.knockbackDirection = knockbackDirection;
+                    currentState = playerTakeDamage;
+                    currentState.EnterState(this);
+                }
             }
         }
     }
@@ -144,12 +150,22 @@ public class PlayerManager : MonoBehaviour
         {
             carrotQuantity = 0;
         }
+        soundEffects.PlayOneShot(playerData.playerTakeCarrotSound);
         carrotManager.UpdateCarrots(carrotQuantity);
     }
 
     public void AddLife(int lifeToAdd)
     {
         hitPoints += lifeToAdd;
+        if(lifeToAdd>=0)
+        {
+            soundEffects.PlayOneShot(playerData.playerTakeHeartSound);
+        }
+        else
+        {
+            soundEffects.PlayOneShot(playerData.playerTakeDamageSound);
+        }
+
         if (hitPoints > playerData.maxHitPointsValue)
         {
             hitPoints = playerData.maxHitPointsValue;

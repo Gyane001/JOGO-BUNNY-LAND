@@ -11,16 +11,19 @@ public class CrowIdleState : CrowBaseState
     public override void EnterState(CrowEnemyManager crowEnemyManager)
     {
         showTime = 0;
-        crowEnemyManager.questionMark.SetActive(true);
-        if (crowEnemyManager.crowRB.transform.rotation.eulerAngles.y == 0)
+        if(crowEnemyManager.transform.GetChild(2).GetComponent<BoxCollider2D>().enabled == true)
         {
-            crowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 0);
+            crowEnemyManager.questionMark.SetActive(true);
+            if (crowEnemyManager.crowRB.transform.rotation.eulerAngles.y == 0)
+            {
+                crowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 0);
+            }
+            else
+            {
+                crowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 180);
+            }
+            crowEnemyManager.crowAnimator.Play("Idle");
         }
-        else
-        {
-            crowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 180);
-        }
-        crowEnemyManager.crowAnimator.Play("Idle");
     }
 
     public override void UpdateState(CrowEnemyManager crowEnemyManager)

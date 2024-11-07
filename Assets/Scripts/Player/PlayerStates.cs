@@ -240,6 +240,7 @@ public class PlayerJumpState : PlayerBaseState
 {   
     public override void EnterState(PlayerManager playerManager)
     {
+        playerManager.soundEffects.PlayOneShot(playerManager.playerData.playerJumpSound);
         playerManager.playerAnimator.Play("Jump");
         if(previousState != "JumpAttack")
         { 
@@ -293,6 +294,7 @@ public class PlayerJumpState : PlayerBaseState
             if(collider.gameObject.tag == "ground" && contactPoint.normal.y > 0.5f)
             {
                 isGrounded = true;
+                playerManager.soundEffects.PlayOneShot(playerManager.playerData.playerFallingSound);
                 if(playerManager.inputManager.moveInput.x != 0)
                 {
                     playerManager.SwitchState(playerManager.playerWalk);
@@ -383,6 +385,7 @@ public class PlayerAttackState : PlayerBaseState
     float attackAnimationSpriteChangeTime;
     public override void EnterState(PlayerManager playerManager)
     {
+        playerManager.soundEffects.PlayOneShot(playerManager.playerData.playerKnifeSound);
         playerManager.playerAnimator.Play("Attack");
         foreach (var clip in playerManager.playerAnimator.runtimeAnimatorController.animationClips)
         {
@@ -683,6 +686,7 @@ public class PlayerSpecialAttackState : PlayerBaseState
     float specialAttackTimeToShowHitbox;
     public override void EnterState(PlayerManager playerManager)
     {
+        playerManager.soundEffects.PlayOneShot(playerManager.playerData.playerSpecialAttackSound);
         playerManager.playerAnimator.Play("SpecialAttack");
         timer = 0;
         foreach (var clip in playerManager.playerAnimator.runtimeAnimatorController.animationClips)
@@ -724,7 +728,7 @@ public class PlayerSpecialAttackState : PlayerBaseState
 
     public override void FixedUpdateState(PlayerManager playerManager)
     {
-
+        MovePlayer(playerManager);
     }
 
     public override string CurrentState(PlayerManager playerManager)
@@ -777,6 +781,27 @@ public class PlayerSpecialAttackState : PlayerBaseState
                 isInvunerable = false;
             }
         }
+    }
+
+    void MovePlayer(PlayerManager playerManager)
+    {
+        float xImpulse = 0;
+        if (playerManager.inputManager.moveInput.x > 0)
+        {
+            playerManager.playerRB.transform.eulerAngles = new Vector2(0, 0);
+            xImpulse = playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if (playerManager.inputManager.moveInput.x < 0)
+        {
+            playerManager.playerRB.transform.eulerAngles = new Vector2(0, 180);
+            xImpulse = -playerManager.playerData.playerSpeed - playerManager.playerRB.velocity.x;
+        }
+        else if (playerManager.inputManager.moveInput.x == 0)
+        {
+            xImpulse = 0 - playerManager.playerRB.velocity.x;
+        }
+
+        playerManager.playerRB.AddForce(new Vector2(xImpulse, 0), ForceMode2D.Impulse);
     }
 }
 

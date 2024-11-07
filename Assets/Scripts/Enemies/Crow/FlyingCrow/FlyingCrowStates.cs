@@ -8,16 +8,19 @@ public class FlyingCrowIdleState : FlyingCrowBaseState
     public override void EnterState(FlyingCrowEnemyManager flyingCrowEnemyManager)
     {
         showTime = 0;
-        flyingCrowEnemyManager.questionMark.SetActive(true);
-        if (flyingCrowEnemyManager.crowRB.transform.rotation.eulerAngles.y == 0)
+        if(flyingCrowEnemyManager.transform.GetChild(2).GetComponent<BoxCollider2D>().enabled == true)
         {
-            flyingCrowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 0);
+            flyingCrowEnemyManager.questionMark.SetActive(true);
+            if (flyingCrowEnemyManager.crowRB.transform.rotation.eulerAngles.y == 0)
+            {
+                flyingCrowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 0);
+            }
+            else
+            {
+                flyingCrowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 180);
+            }
+            flyingCrowEnemyManager.crowAnimator.Play("Idle");
         }
-        else
-        {
-            flyingCrowEnemyManager.questionMark.transform.eulerAngles = new Vector3(0, 180);
-        }
-        flyingCrowEnemyManager.crowAnimator.Play("Idle");
     }
 
     public override void UpdateState(FlyingCrowEnemyManager flyingCrowEnemyManager)
@@ -160,12 +163,15 @@ public class FlyingCrowFlyState : FlyingCrowBaseState
     public override void EnterState(FlyingCrowEnemyManager flyingCrowEnemyManager)
     {
         showExclamationTime = 0;
+        if(flyingCrowEnemyManager.transform.GetChild(2).GetComponent<BoxCollider2D>().enabled == true)
+        {
         flyingCrowEnemyManager.exclamation.SetActive(true);
 
         isWalking = false;
         notWalkingTime = 0;
 
         knockbackTimer = 0;
+        }
     }
 
     public override void UpdateState(FlyingCrowEnemyManager flyingCrowEnemyManager)

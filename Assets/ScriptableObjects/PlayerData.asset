@@ -21,10 +21,18 @@ MonoBehaviour:
   knockbackFromAttacksHorizontal: 5
   knockbackFromAttacksVertical: 15
   attackDamage: 2
-  specialAttackDamage: 0
+  specialAttackDamage: 5
   attackKnockback: 20
   spinningKnifeSpeed: 6
   spinningKnifeDuration: 1
   invunerabilityFlashTime: 0.1
+  playerTakeCarrotSound: {fileID: 8300000, guid: dc9897f35fd2aa04dab8a29e017c0ab9, type: 3}
+  playerTakeHeartSound: {fileID: 8300000, guid: 66a5a52ea1ba0074b90c616b4852f0f4, type: 3}
+  playerTakeDamageSound: {fileID: 8300000, guid: 7538d7e3639978a49866e22a3812ca77, type: 3}
+  playerDeathSound: {fileID: 8300000, guid: a9e57600615995b4b8bb0b9074e62706, type: 3}
+  playerJumpSound: {fileID: 8300000, guid: 9c7da09023c65e240bdda908dbd89cbb, type: 3}
+  playerFallingSound: {fileID: 8300000, guid: cc928eeb01e3a594fb37df402fbd2df4, type: 3}
+  playerKnifeSound: {fileID: 8300000, guid: 6156ef56d38697d4aad67610d0e97315, type: 3}
+  playerSpecialAttackSound: {fileID: 8300000, guid: 07fcc6884f90dea47876e90a618af3bf, type: 3}
   maxInvunerableTimeValue: 1.5
   maxHitPointsValue: 20

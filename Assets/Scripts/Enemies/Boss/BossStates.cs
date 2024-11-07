@@ -68,6 +68,9 @@ public class BossSpawnState : BossBaseState
                 bossManager.bossAnimator.SetFloat("AnimationSpeedMultiplier", bossManager.bossData.bossSpawnAnimationSpeedMultiplier);
             }
         }
+        bossManager.backgroundMusic.Stop();
+        bossManager.backgroundMusic.PlayOneShot(bossManager.bossData.bossBackgroundMusic);
+        bossManager.soundEffects.PlayOneShot(bossManager.bossData.bossLaugh);
     }
 
     public override void UpdateState(BossManager bossManager)
@@ -117,6 +120,15 @@ public class BossIdleState : BossBaseState
     {
         bossManager.bossAnimator.Play("Idle");
         bossManager.LifeBarObj.SetActive(true);
+
+        AnimationClip[] clips = bossManager.bossAnimator.runtimeAnimatorController.animationClips;
+        foreach (var clip in clips)
+        {
+            if (clip.name == "Spawn")
+            {
+                bossManager.bossAnimator.SetFloat("AnimationSpeedMultiplier", bossManager.bossData.bossIdleAnimationSpeedMultiplier);
+            }
+        }
     }
 
     public override void UpdateState(BossManager bossManager)
@@ -211,6 +223,7 @@ public class BossAttackSporeState : BossBaseState
             if (attackTimer >= fireTiming)
             {
                 bossManager.SpawnSpores();
+                bossManager.soundEffects.PlayOneShot(bossManager.bossData.bossSporeSpawnSound);
                 shotsFired += 1;
             }
         }
@@ -290,6 +303,7 @@ public class BossAttackGrassState : BossBaseState
             if (attackTimer >= fireTiming && !hasAttacked)
             {
                 bossManager.SpawnGrass();
+                bossManager.soundEffects.PlayOneShot(bossManager.bossData.bossVinesSpawnSound);
                 attackTimer = 0;
                 hasAttacked = true;
             }
@@ -336,6 +350,8 @@ public class BossDeathState : BossBaseState
     {
         bossManager.bossAnimator.Play("Death");
 
+        bossManager.soundEffects.PlayOneShot(bossManager.bossData.bossDeathSound);
+
         bossManager.LifeBarObj.SetActive(false);
         timer = 0;
         AnimationClip[] clips = bossManager.bossAnimator.runtimeAnimatorController.animationClips;
@@ -352,7 +368,7 @@ public class BossDeathState : BossBaseState
     public override void UpdateState(BossManager bossManager)
     {
         timer += Time.deltaTime * bossManager.bossData.bossDeathAnimationSpeedMultiplier;
-        if (timer >= bossDeathAnimationTotalTime + 0.5)
+        if (timer >= bossDeathAnimationTotalTime + 3.5)
         {
             bossManager.GoToCredits();
         }

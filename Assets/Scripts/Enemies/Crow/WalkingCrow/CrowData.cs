@@ -25,6 +25,8 @@ public class CrowData : ScriptableObject
         public float exclamationShowTime;
         public float knockbackTimeDuration;
         public float knockbackMultiplier;
+        public AudioClip crowTakeDamageSound;
+        public AudioClip crowDeathSound;
         [Space(10)]
     #endregion
 

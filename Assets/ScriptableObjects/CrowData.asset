@@ -23,5 +23,7 @@ MonoBehaviour:
   exclamationShowTime: 1
   knockbackTimeDuration: 0.1
   knockbackMultiplier: 1
+  crowTakeDamageSound: {fileID: 8300000, guid: faa809edb6c15c74fa008d83c7e5af42, type: 3}
+  crowDeathSound: {fileID: 8300000, guid: 36fa50432dea0b24385ca3dd7d32c678, type: 3}
   crowMaxHP: 5
   crowMaxInvunerableTime: 0.5

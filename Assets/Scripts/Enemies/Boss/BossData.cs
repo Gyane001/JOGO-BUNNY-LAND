@@ -30,13 +30,21 @@ public class BossData : ScriptableObject
         public int bossAttackGrassNumberOfGrass;
         public float bossAttackGrassTimeToDestroy;
         public float bossMaxInvunerabilityTime;
-        public float bossFlashTime;    
+        public float bossFlashTime;  
+
+        public AudioClip bossBackgroundMusic;
+        public AudioClip bossLaugh;
+        public AudioClip[] bossDamageSounds;
+        public AudioClip bossSporeSpawnSound;
+        public AudioClip bossVinesSpawnSound;
+        public AudioClip bossDeathSound;
         [Space(10)]
     #endregion
 
     #region Animation Variables
         [Header("Animation Variables")]
         public float bossSpawnAnimationSpeedMultiplier;
+        public float bossIdleAnimationSpeedMultiplier;
         public float bossAttackSporeAnimationSpeedMultiplier;
         public float bossAttackGrassAnimationSpeedMultiplier;
         public float bossDeathAnimationSpeedMultiplier;

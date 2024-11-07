@@ -13,6 +13,7 @@ public class CrowEnemyManager : MonoBehaviour
         public GameObject questionMark;
         public int crowCurrentHP;
         public Transform crowHitBoxPosition;
+        public AudioSource soundEffects;
     #endregion
     #region Crow Data
         public CrowData crowData;
@@ -77,14 +78,31 @@ public class CrowEnemyManager : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        crowCurrentHP -= damage;
-        crowCurrentState.isInvunerable = true;
-        crowCurrentState.invunerableTotalTimer = 0;
-        crowCurrentState.invunerableFlashTimer = 0;
-        crowCurrentState.spriteVisibility = true;
-        if (crowCurrentHP < 0)
+        if(crowCurrentHP>0)
         {
-            this.gameObject.SetActive(false);
+            crowCurrentHP -= damage;
+
+            if (crowCurrentHP <= 0)
+            {
+                crowCurrentState.isInvunerable = false;
+                crowCurrentState.invunerableTotalTimer = 0;
+                crowCurrentState.invunerableFlashTimer = 0;
+                crowCurrentState.spriteVisibility = false;
+                soundEffects.PlayOneShot(crowData.crowDeathSound);
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                this.gameObject.GetComponent<Animator>().enabled = false;
+                this.gameObject.transform.GetChild(3).GetComponent<BoxCollider2D>().enabled = false;
+                this.gameObject.transform.GetChild(2).GetComponent<BoxCollider2D>().enabled = false;
+                //Invoke("DeactivateCrow",0.5f);
+            }
+            else
+            {
+                crowCurrentState.isInvunerable = true;
+                crowCurrentState.invunerableTotalTimer = 0;
+                crowCurrentState.invunerableFlashTimer = 0;
+                crowCurrentState.spriteVisibility = true;
+                soundEffects.PlayOneShot(crowData.crowTakeDamageSound);
+            }
         }
     }
 
