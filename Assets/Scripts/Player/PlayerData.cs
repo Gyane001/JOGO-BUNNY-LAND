@@ -34,6 +34,8 @@ public class PlayerData : ScriptableObject
         public AudioClip playerFallingSound;
         public AudioClip playerKnifeSound;
         public AudioClip playerSpecialAttackSound;
+        public AudioClip playerOpenDoorSound;
+        public AudioClip backgroundDeathSound;
         [Space(10)]
     #endregion
 

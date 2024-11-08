@@ -131,6 +131,7 @@ public class BossManager : MonoBehaviour
             temp.y = groundPositionTransform.position.y - bossData.bossAttackGrassSize/2;
             temp.x += randomXPosition;
             var grass=Instantiate(attackGrassPrefab, temp, quaternion.identity);
+            grass.GetComponent<SpriteRenderer>().sprite = bossData.GrassSprites[UnityEngine.Random.Range(0,bossData.GrassSprites.Length)];
         }
     }
 

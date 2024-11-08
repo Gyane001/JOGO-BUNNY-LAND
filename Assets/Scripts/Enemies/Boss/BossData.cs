@@ -38,6 +38,8 @@ public class BossData : ScriptableObject
         public AudioClip bossSporeSpawnSound;
         public AudioClip bossVinesSpawnSound;
         public AudioClip bossDeathSound;
+
+        public Sprite[] GrassSprites;
         [Space(10)]
     #endregion
 

@@ -34,5 +34,7 @@ MonoBehaviour:
   playerFallingSound: {fileID: 8300000, guid: cc928eeb01e3a594fb37df402fbd2df4, type: 3}
   playerKnifeSound: {fileID: 8300000, guid: 6156ef56d38697d4aad67610d0e97315, type: 3}
   playerSpecialAttackSound: {fileID: 8300000, guid: 07fcc6884f90dea47876e90a618af3bf, type: 3}
+  playerOpenDoorSound: {fileID: 8300000, guid: 8ba953ca647580b4c91b0641dfbcd621, type: 3}
+  backgroundDeathSound: {fileID: 8300000, guid: 487bf93eb528c054bbaa901f2fb0408b, type: 3}
   maxInvunerableTimeValue: 1.5
   maxHitPointsValue: 20

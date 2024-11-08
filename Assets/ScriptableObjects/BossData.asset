@@ -41,6 +41,11 @@ MonoBehaviour:
   bossSporeSpawnSound: {fileID: 8300000, guid: 0a7121e1ff608894d894bf1f1e3dc014, type: 3}
   bossVinesSpawnSound: {fileID: 8300000, guid: 6e3ee0d41a7c26847ab9faab8990d19f, type: 3}
   bossDeathSound: {fileID: 8300000, guid: 179370aa640b50848b6fd91e38a6e853, type: 3}
+  GrassSprites:
+  - {fileID: 111620869, guid: 80af3696fbb28194ca337253de9b96a5, type: 3}
+  - {fileID: -934210084, guid: 80af3696fbb28194ca337253de9b96a5, type: 3}
+  - {fileID: -1585258223, guid: 80af3696fbb28194ca337253de9b96a5, type: 3}
+  - {fileID: -749760538, guid: 80af3696fbb28194ca337253de9b96a5, type: 3}
   bossSpawnAnimationSpeedMultiplier: 1
   bossIdleAnimationSpeedMultiplier: 0.5
   bossAttackSporeAnimationSpeedMultiplier: 1

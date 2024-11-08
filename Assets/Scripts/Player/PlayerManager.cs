@@ -30,8 +30,7 @@ public class PlayerManager : MonoBehaviour
         public int carrotQuantity = 0;
         public int hitPoints;
         public AudioSource soundEffects;
-        
-
+        public AudioSource backgroundSounds;
     #endregion
     #region Player Data
 
@@ -136,6 +135,17 @@ public class PlayerManager : MonoBehaviour
                     currentState.EnterState(this);
                 }
             }
+        }
+    }
+
+    public void Die()
+    {
+        playerSpecialAttackObj.SetActive(false);
+        if(currentState != playerDeath)
+        {
+            soundEffects.PlayOneShot(playerData.playerDeathSound);
+            hitPoints = 0;
+            SwitchState(playerDeath);
         }
     }
 

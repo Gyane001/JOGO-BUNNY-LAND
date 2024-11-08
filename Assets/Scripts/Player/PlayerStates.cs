@@ -54,6 +54,7 @@ public class PlayerIdleState : PlayerBaseState
     {
         if(collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
         }
     }
@@ -171,6 +172,7 @@ public class PlayerWalkState : PlayerBaseState
     {
         if(collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
         }
     }
@@ -285,6 +287,7 @@ public class PlayerJumpState : PlayerBaseState
     {   
         if(collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
             return;
         }
@@ -459,6 +462,7 @@ public class PlayerAttackState : PlayerBaseState
     {
         if(collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
         }
     }
@@ -597,6 +601,7 @@ public class PlayerJumpAttackState : PlayerBaseState
     {
         if (collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
         }
 
@@ -740,6 +745,7 @@ public class PlayerSpecialAttackState : PlayerBaseState
     {
         if(collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
         }
     }
@@ -851,6 +857,7 @@ public class PlayerTakeDamageState : PlayerBaseState
     {
         if(collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
         }
     }
@@ -899,11 +906,12 @@ public class PlayerDeathState : PlayerBaseState
 {
     float deathAnimationTotalTime;
     float timer;
+    bool playOnce;
     public override void EnterState(PlayerManager playerManager)
     {
         playerManager.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         playerManager.deathSpriteRenderer.gameObject.SetActive(true);
-        deathAnimationTotalTime = playerManager.playerAnimator.GetCurrentAnimatorClipInfo(0).Length;
+        deathAnimationTotalTime = playerManager.playerAnimator.GetCurrentAnimatorClipInfo(0).Length + 0.5f;
         timer = 0;
         playerManager.playerRB.bodyType = RigidbodyType2D.Static;
         playerManager.playerLifeManager.UpdateLife(0,playerManager.playerData.maxHitPointsValue);
@@ -911,7 +919,7 @@ public class PlayerDeathState : PlayerBaseState
 
     public override void UpdateState(PlayerManager playerManager)
     {
-        if (timer <= deathAnimationTotalTime)
+        if (timer <= deathAnimationTotalTime && !playOnce)
         {
             for(int i=0; i<playerManager.deathAnimationPoints.childCount; i++)
             {
@@ -922,10 +930,13 @@ public class PlayerDeathState : PlayerBaseState
             }
             timer += Time.deltaTime;
         }
-        else
+        else if(!playOnce)
         {
+            playOnce = true;
             playerManager.inGameMenu.SetActive(false);
             playerManager.gameOverMenu.SetActive(true);
+            playerManager.backgroundSounds.Stop();
+            playerManager.backgroundSounds.PlayOneShot(playerManager.playerData.backgroundDeathSound);
         }
     }
 
@@ -943,6 +954,7 @@ public class PlayerDeathState : PlayerBaseState
     {
         if(collider.gameObject.tag == "DeathBarrier")
         {
+            playerManager.Die();
             playerManager.SwitchState(playerManager.playerDeath);
         }
     }
@@ -992,6 +1004,8 @@ public class PlayerEnterDoorState : PlayerBaseState
     public override void EnterState(PlayerManager playerManager)
     {
         isInvunerable = true;
+        playerManager.soundEffects.PlayOneShot(playerManager.playerData.playerOpenDoorSound);
+        playerManager.backgroundSounds.Stop();
     }
 
     public override void UpdateState(PlayerManager playerManager)
