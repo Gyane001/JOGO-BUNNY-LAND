@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Creditos.unity
     guid: bf9fdf936721eb54fb2c2e1cf723a353
   - enabled: 1
+    path: Assets/Scenes/ComoJogar.unity
+    guid: 28c591e4d08bae54388876527d16ed57
+  - enabled: 1
     path: Assets/Scenes/Game Over.unity
     guid: 78c83ca8d07d2434aac931fe14dfebcf
   m_configObjects: {}

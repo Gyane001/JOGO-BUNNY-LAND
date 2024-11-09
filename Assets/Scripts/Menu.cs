@@ -31,6 +31,14 @@ public class Menu : MonoBehaviour
         Invoke("DelayedQuitGame", 0.1f);
     }
 
+    //  How to play
+    public void HowToPlay()
+    {
+        soundEffects.PlayOneShot(quit);
+        Invoke("DelayedHowToPlayLoad", 0.1f);
+    }
+
+
     private void DelayedLevelLoad()
     {
         SceneManager.LoadScene("Fase 1"); // Load scene after delay
@@ -49,6 +57,11 @@ public class Menu : MonoBehaviour
     private void DelayedQuitGame()
     {
         Application.Quit();
+    }
+
+    private void DelayedHowToPlayLoad()
+    {
+        SceneManager.LoadScene("ComoJogar");
     }
 }
 
