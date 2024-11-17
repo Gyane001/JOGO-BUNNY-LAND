@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 59481c74c9b7dde49b7616922407260d
+guid: 7ce87a614ba191043a4570e7d509cd89
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Como jogar_0
+      name: ComoJogar_0
       rect:
         serializedVersion: 2
         x: 530
@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eba7d2ec1d0865c4fb3a30dd2b8ab4cb
-      internalID: -2012516586
+      spriteID: df3a9f6d85e487c4692ffadf66136387
+      internalID: 1974813881
       vertices: []
       indices: 
       edges: []
@@ -128,7 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Como jogar_0: -2012516586
+      ComoJogar_0: 1974813881
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
